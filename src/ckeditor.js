@@ -7,7 +7,7 @@
 
 import { debounce } from 'lodash-es';
 import DecoupledEditor from './decoupled-editor';
-import MediaEmbed from './ckeditor-embed';
+import MediaEmbedPlugin from './ckeditor-embed';
 
 const INPUT_EVENT_DEBOUNCE_WAIT = 300;
 
@@ -43,7 +43,7 @@ export default {
                 autosave: {
                     waitingTime: 60000,
 				},
-				mediaEmbed: MediaEmbed,
+				mediaEmbed: MediaEmbedPlugin,
 			} )
 		},
 		tagName: {

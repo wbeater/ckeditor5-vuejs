@@ -1,9 +1,11 @@
 {
   "name": "ckeditor5-vuejs",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Customized rebuilt CKEditor5 for vuejs",
   "main": "./dist/ckeditor.umd.js",
-  "dependencies": {},
+  "dependencies": {
+    "vue": "^2.6.10"
+  },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "*",
     "@ckeditor/ckeditor5-adapter-ckfinder": "*",

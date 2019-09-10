@@ -8,6 +8,7 @@ import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 import { toWidget, toWidgetEditable } from '@ckeditor/ckeditor5-widget/src/utils';
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
 import DecoupledEditor from './decoupled-editor';
+import MediaEmbed from './ckeditor-embed';
 
 Vue.component('ckeditor', CKEditor); 
-export {CKEditor, DecoupledEditor, Autosave, Command, Plugin, ButtonView, toWidget, toWidgetEditable, Widget};
+export {CKEditor, DecoupledEditor, MediaEmbed, Autosave, Command, Plugin, ButtonView, toWidget, toWidgetEditable, Widget};

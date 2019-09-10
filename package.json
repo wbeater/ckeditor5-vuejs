@@ -1,6 +1,6 @@
 {
   "name": "ckeditor5-vuejs",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "Customized rebuilt CKEditor5 for vuejs",
   "main": "./dist/ckeditor.umd.js",
   "dependencies": {},

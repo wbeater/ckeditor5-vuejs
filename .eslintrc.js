@@ -1,5 +1,5 @@
 module.exports = {
-    root: true,
+    root: false,
     env: {
       node: true
     },
@@ -8,8 +8,8 @@ module.exports = {
       'no-console': 'off', //process.env.NODE_ENV === 'production' ? 'error' : 'off',
       'no-debugger': 'off', // process.env.NODE_ENV === 'production' ? 'error' : 'off'
     },
-    // parserOptions: {
-    //   parser: 'babel-eslint'
-    // }
+    parserOptions: {
+      parser: 'babel-eslint'
+    }
   }
   

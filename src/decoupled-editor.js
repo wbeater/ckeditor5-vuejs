@@ -51,7 +51,7 @@ DecoupledEditor.builtinPlugins = [
 	Underline,
 	BlockQuote,
 	CKFinder,
-	EasyImage,
+	// EasyImage,
 	Heading,
 	Image,
 	ImageCaption,

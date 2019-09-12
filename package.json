@@ -1,11 +1,9 @@
 {
   "name": "ckeditor5-vuejs",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "Customized rebuilt CKEditor5 for vuejs",
   "main": "./dist/ckeditor.umd.js",
-  "dependencies": {
-    "vue": "^2.6.10"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "*",
     "@ckeditor/ckeditor5-adapter-ckfinder": "*",
@@ -48,6 +46,7 @@
     "style-loader": "^1.0.0",
     "terser-webpack-plugin": "*",
     "uglifyjs-webpack-plugin": "*",
+    "vue": "^2.6.10",
     "vue-template-compiler": "*"
   },
   "scripts": {

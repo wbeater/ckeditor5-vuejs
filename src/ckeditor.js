@@ -7,7 +7,9 @@
 
 import { debounce } from 'lodash-es';
 import DecoupledEditor from './decoupled-editor';
+import AutosavePlugin from '@ckeditor/ckeditor5-autosave/src/autosave';
 import MediaEmbedPlugin from './ckeditor-embed';
+import './ckeditor.css';
 
 const INPUT_EVENT_DEBOUNCE_WAIT = 300;
 
@@ -76,6 +78,11 @@ export default {
 			} );
 		}
 
+		if (!this.config) this.config = {};
+		if (!this.config.mediaEmbed) this.config.mediaEmbed = MediaEmbedPlugin;
+		if (!this.config.extraPlugins) this.config.extraPlugins = [];
+		this.config.extraPlugins.push(AutosavePlugin);
+
 		this.editor.create( this.$el, this.config )
 			.then( editor => {
 				// Save the reference to the instance for further use.
@@ -86,6 +93,11 @@ export default {
 
 				this.$_setUpEditorEvents();
 
+				editor.ui.getEditableElement().parentElement.insertBefore(
+					editor.ui.view.toolbar.element,
+					editor.ui.getEditableElement()
+				);
+				
 				// Let the world know the editor is ready.
 				this.$emit( 'ready', editor );
 			} )

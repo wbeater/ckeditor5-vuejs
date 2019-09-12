@@ -1,0 +1,10 @@
+.ck-content .media {
+    display:inline-block !important;
+    overflow: hidden !important;
+}
+.ck.ck-toolbar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index:1;
+}

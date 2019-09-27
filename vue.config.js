@@ -2,7 +2,6 @@ const path = require( 'path' );
 const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
 const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 const TerserPlugin = require('terser-webpack-plugin');
-const UglifyJsWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
 module.exports = {
   devServer: {

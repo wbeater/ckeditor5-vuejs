@@ -1,4 +1,6 @@
 src/
 vue.config.js
+App.vue
+App.css
 .env
 .env.production.local

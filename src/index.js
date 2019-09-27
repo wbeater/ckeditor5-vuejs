@@ -7,8 +7,10 @@ import { toWidget, toWidgetEditable } from '@ckeditor/ckeditor5-widget/src/utils
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
 import DecoupledEditor from './decoupled-editor';
 import UploaderPlugin from './uploader-plugin';
+import InlineEditor from './lib/inlineeditor';
+import BalloonEditor from './lib/ballooneditor';
 // import AutosavePlugin from '@ckeditor/ckeditor5-autosave/src/autosave';
 // import MediaEmbedPlugin from './ckeditor-embed';
 
 Vue.component('ckeditor', CKEditor); 
-export {CKEditor, DecoupledEditor, /*MediaEmbedPlugin, AutosavePlugin,*/ UploaderPlugin, Command, Plugin, ButtonView, toWidget, toWidgetEditable, Widget};
+export {CKEditor, DecoupledEditor, InlineEditor, BalloonEditor,/*MediaEmbedPlugin, AutosavePlugin,*/ UploaderPlugin, Command, Plugin, ButtonView, toWidget, toWidgetEditable, Widget};

@@ -22,6 +22,7 @@
 
 <script>
   import './App.css';
+  import '@ckeditor/ckeditor5-widget/theme/widget.css';
   import {CKEditor, InlineEditor, BalloonEditor, AutosavePlugin, MediaEmbedPlugin, UploaderPlugin} from './index';
   export default {
       data() {

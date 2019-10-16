@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import CKEditor from './ckeditor';
 import Command from '@ckeditor/ckeditor5-core/src/command';
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
@@ -9,8 +8,10 @@ import DecoupledEditor from './decoupled-editor';
 import UploaderPlugin from './uploader-plugin';
 import InlineEditor from './lib/inlineeditor';
 import BalloonEditor from './lib/ballooneditor';
+import GrapesEditor from './components/GrapesEditor';
+import EventBus from './services/EventBus';
 // import AutosavePlugin from '@ckeditor/ckeditor5-autosave/src/autosave';
 // import MediaEmbedPlugin from './ckeditor-embed';
 
-Vue.component('ckeditor', CKEditor); 
-export {CKEditor, DecoupledEditor, InlineEditor, BalloonEditor,/*MediaEmbedPlugin, AutosavePlugin,*/ UploaderPlugin, Command, Plugin, ButtonView, toWidget, toWidgetEditable, Widget};
+// Vue.component('ckeditor', CKEditor); 
+export {GrapesEditor, EventBus, CKEditor, DecoupledEditor, InlineEditor, BalloonEditor,/*MediaEmbedPlugin, AutosavePlugin,*/ UploaderPlugin, Command, Plugin, ButtonView, toWidget, toWidgetEditable, Widget};

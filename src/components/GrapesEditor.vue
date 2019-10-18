@@ -34,10 +34,10 @@ import './style-manager.css';
 import initGrapesAssets from '@/components/CustomOpenAssets';
 
 // import "grapesjs-preset-newsletter";
-const Constant = {
-  TPL_URL_STORE: 'http://localhost:8080/save',
-  TPL_URL_LOAD: 'http://localhost:8080/load',
-};
+// const Constant = {
+//   TPL_URL_STORE: 'http://localhost:8080/save',
+//   TPL_URL_LOAD: 'http://localhost:8080/load',
+// };
 
 export default {
   data: function() {
@@ -48,6 +48,7 @@ export default {
 
   props: {
     //'openAssets': {type: Object, default: undefined},
+    allowExport: {type: Boolean, default: false},
     'mediaConfig': {type: Object, default: () => {return {show: false}}},
 
     'html': {type: String, default: () => ('')}, 
@@ -65,7 +66,7 @@ export default {
 
   created() {
     window.addEventListener('resize', () => {
-      document.querySelector('#custom_gjs').style.height = window.innerHeight + 'px';
+      document.querySelector('#custom_gjs').style.height = (window.innerHeight - 50) + 'px';
     });
   },
   mounted: async function() {
@@ -89,24 +90,6 @@ export default {
     },
 
     createGrapesEditor() {
-      // var lp = "./img/";
-      // var plp = "//placehold.it/350x250/";
-      // var images = [
-      //   lp + "team1.jpg",
-      //   lp + "team2.jpg",
-      //   lp + "team3.jpg",
-      //   plp + "78c5d6/fff/image1.jpg",
-      //   plp + "459ba8/fff/image2.jpg",
-      //   plp + "79c267/fff/image3.jpg",
-      //   plp + "c5d647/fff/image4.jpg",
-      //   plp + "f28c33/fff/image5.jpg",
-      //   plp + "e868a2/fff/image6.jpg",
-      //   plp + "cc4360/fff/image7.jpg",
-      //   lp + "work-desk.jpg",
-      //   lp + "phone-app.png",
-      //   lp + "bg-gr-v.png"
-      // ];
-
       let styles = [
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
       ];
@@ -130,7 +113,8 @@ export default {
       let urlLoad = this.urlLoad;
       let images = this.images;
       let stepsBeforeSave = this.stepsBeforeSave;
-      let height = window.innerHeight;
+      let height = window.innerHeight - 50;
+      let allowExport = this.allowExport;
 
       let editor = grapesjs.init({
         avoidInlineStyle: 1,
@@ -237,37 +221,42 @@ export default {
       });
 
       // Do stuff on load
-      // editor.on("loadxxx", function() {
-      //   var $ = grapesjs.$;
+      editor.on("load", function() {
+          var $ = grapesjs.$;
 
-        // Load and show settings and style manager
-        // var openTmBtn = pn.getButton("views", "open-tm");
-        // openTmBtn && openTmBtn.set("active", 1);
-        // var openSm = pn.getButton("views", "open-sm");
-        // openSm && openSm.set("active", 1);
+          // Load and show settings and style manager
+          var openTmBtn = pn.getButton('views', 'open-tm');
+          openTmBtn && openTmBtn.set('active', 1);
+          var openSm = pn.getButton('views', 'open-sm');
+          openSm && openSm.set('active', 1);
 
-        // Add Settings Sector
-        // if ($) {
-        //   var traitsSector = $(
-        //     '<div class="gjs-sm-sector no-select">' +
-        //       '<div class="gjs-sm-title"><span class="icon-settings fa fa-cog"></span> Settings</div>' +
-        //       '<div class="gjs-sm-properties" style="display: none;"></div></div>'
-        //   );
-        //   var traitsProps = traitsSector.find(".gjs-sm-properties");
-        //   traitsProps.append($(".gjs-trt-traits"));
-        //   $(".gjs-sm-sectors").before(traitsSector);
+          // Add Settings Sector
+          if ($) {
+            var traitsSector = $(
+              '<div class="gjs-sm-sector no-select">' +
+                '<div class="gjs-sm-title"><span class="icon-settings fa fa-cog"></span> Settings</div>' +
+                '<div class="gjs-sm-properties" style="display: none;"></div>' + 
+              '</div>'
+            );
 
-        //   traitsSector.find(".gjs-sm-title").on("click", function() {
-        //     var traitStyle = traitsProps.get(0).style;
-        //     var hidden = traitStyle.display == "none";
-        //     if (hidden) {
-        //       traitStyle.display = "block";
-        //     } else {
-        //       traitStyle.display = "none";
-        //     }
-        //   });
-        // }
-        // });
+            var traitsProps = traitsSector.find(".gjs-sm-properties");
+            traitsProps.append($(".gjs-trt-traits"));
+            $(".gjs-sm-sectors").before(traitsSector);
+
+            const exports = $('.gjs-pn-btn.fa-code');
+            if (!allowExport && exports) exports.remove();
+
+            traitsSector.find(".gjs-sm-title").on("click", function() {
+              var traitStyle = traitsProps.get(0).style;
+              var hidden = traitStyle.display == "none";
+              if (hidden) {
+                traitStyle.display = "block";
+              } else {
+                traitStyle.display = "none";
+              }
+            });
+          }
+        });
 
       // Open block manager
       // var openBlocksBtn = editor.Panels.getButton("views", "open-blocks");
@@ -366,3 +355,27 @@ export default {
 // grapesjs-firestore - Storage wrapper for Cloud Firestore
 // grapesjs-parser-postcss - Custom CSS parser for GrapesJS by using PostCSS
 </script>
+
+<style>
+  #gjs-sm-float,
+  .gjs-pn-views .fa-cog {
+    display: none;
+  }
+
+  .gjs-pn-panel.gjs-pn-views {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .gjs-pn-btn.gjs-pn-active {
+    box-shadow: none;
+  }
+
+  .gjs-pn-views .gjs-pn-btn {
+    margin: 0;
+    height: 40px;
+    padding: 10px;
+    width: 33.3333%;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  }
+</style>

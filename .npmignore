@@ -4,3 +4,4 @@ App.vue
 App.css
 .env
 .env.production.local
+main.js

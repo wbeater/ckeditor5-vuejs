@@ -12,18 +12,27 @@
   "main": "./dist/ckeditor.umd.js",
   "dependencies": {
     "grapesjs": "^0.15.8",
-    "grapesjs-blocks-bootstrap4": "^0.1.16",
     "grapesjs-custom-code": "^0.1.2",
     "grapesjs-lory-slider": "^0.1.5",
-    "grapesjs-parser-postcss": "^0.1.1",
     "grapesjs-preset-webpage": "^0.1.11",
-    "grapesjs-tabs": "^0.2.1",
+    "grapesjs-style-filter": "^0.1.1",
     "grapesjs-tooltip": "^0.1.5",
     "grapesjs-touch": "^0.1.1",
-    "grapesjs-tui-image-editor": "^0.1.2"
+    "underscore": "^1.9.1",
+    "underscore.string": "^3.3.5"
+  },
+  "optionalDependencies": {
+    "canvas": "*",
+    "fabric": "*",
+    "grapesjs-style-gradient": "*",
+    "grapesjs-tui-image-editor-custom": "*",
+    "jsdom": "*",
+    "xmldom": "*"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "*",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
     "@ckeditor/ckeditor5-adapter-ckfinder": "*",
     "@ckeditor/ckeditor5-alignment": "*",
     "@ckeditor/ckeditor5-autoformat": "*",
@@ -50,7 +59,8 @@
     "@ckeditor/ckeditor5-table": "^14.0.0",
     "@ckeditor/ckeditor5-theme-lark": "*",
     "@ckeditor/ckeditor5-vue": "0.0.1",
-    "@vue/cli-plugin-babel": "*",
+    "@vue/babel-preset-app": "^4.0.4",
+    "@vue/cli-plugin-babel": "^4.0.4",
     "@vue/cli-plugin-eslint": "*",
     "@vue/cli-service": "*",
     "@vue/eslint-config-standard": "*",

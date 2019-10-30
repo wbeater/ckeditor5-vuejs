@@ -11,19 +11,56 @@
 // https://grapesjs.com/docs/guides/Replace-Rich-Text-Editor.html#interface
 // import "@/node_modules/grapesjs/dist/css/grapes.min";
 
-import Rest from '@/services/rest';
+// import Rest from '@/services/rest';
 
 import grapesjs from 'grapesjs';
+
 import 'grapesjs-component-countdown';
 import 'grapesjs-lory-slider';
 import 'grapesjs-blocks-bootstrap4';
+// import 'grapesjs-style-gradient';
 
-import grapejsTabs from 'grapesjs-tabs';
+/**********BEGIN Image editor ************* */
+// import '@/assets/tui-editor/svg/icon-a.svg';
+// import '@/assets/tui-editor/svg/icon-b.svg';
+// import '@/assets/tui-editor/svg/icon-c.svg';
+// import '@/assets/tui-editor/svg/icon-d.svg';
+
+// Load Style Code
+// import '@/assets/tui-editor/css/tui-image-editor.min.css';
+// import '@/assets/tui-editor/css/tui-color-picker.min.css';
+/**********END Image editor ************* */
+
+//Load script code
+// import '@/assets/tui-editor/js/fabric.min.js';
+// import '@/assets/tui-editor/js/tui-code-snippet.min.js';
+// import '@/assets/tui-editor/js/tui-color-picker.min.js';
+// import '@/assets/tui-editor/js/tui-image-editor.min.js';
+
+import grapesjsTabs from 'grapesjs-tabs';
 import grapesjsCustomCode from 'grapesjs-custom-code';
 import grapesjsTouch from 'grapesjs-touch';
-import grapesjsParserPostcss from 'grapesjs-parser-postcss';
+// import grapesjsParserPostcss from 'grapesjs-parser-postcss';
 import grapesjsTooltip from 'grapesjs-tooltip';
-import grapesjsTuiImageEditor from 'grapesjs-tui-image-editor';
+import grapesjsTuiImageEditor from 'grapesjs-tui-image-editor-custom';
+import grapesjsStyleFilter from 'grapesjs-style-filter';
+
+grapesjs.plugins.add('grapesjs-tabs', grapesjsTabs);
+grapesjs.plugins.add('grapesjs-tui-image-editor', grapesjsTuiImageEditor);
+grapesjs.plugins.add('grapesjs-custom-code', grapesjsCustomCode);
+grapesjs.plugins.add('grapesjs-touch', grapesjsTouch);
+// grapesjs.plugins.add('grapesjs-parser-postcss', grapesjsParserPostcss);
+grapesjs.plugins.add('grapesjs-tooltip', grapesjsTooltip);
+grapesjs.plugins.add('grapesjs-style-filter', grapesjsStyleFilter);
+
+// import grapesjsStyleGradient from '@/plugins/grapesjs-style-gradient';
+// grapesjs.plugins.add('grapesjs-style-gradient', grapesjsStyleGradient);
+
+
+// grapesjs.plugins.add('grapesjs-custom-code', () => import('grapesjs-custom-code'));
+// grapesjs.plugins.add('grapesjs-touch', () => import('grapesjs-touch'));
+// grapesjs.plugins.add('grapesjs-parser-postcss', () => import('grapesjs-parser-postcss'));
+// grapesjs.plugins.add('grapesjs-tooltip', () => import('grapesjs-tooltip'))
 
 import "grapesjs/dist/css/grapes.min.css";
 import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css"
@@ -32,12 +69,40 @@ import customStyleManager from './style-manager';
 import './style-manager.css';
 
 import initGrapesAssets from '@/components/CustomOpenAssets';
-
 // import "grapesjs-preset-newsletter";
-// const Constant = {
-//   TPL_URL_STORE: 'http://localhost:8080/save',
-//   TPL_URL_LOAD: 'http://localhost:8080/load',
-// };
+
+// import * as icona from '@/assets/tui-editor/svg/icon-a.svg';
+// import * as iconb from '@/assets/tui-editor/svg/icon-b.svg';
+// import * as iconc from '@/assets/tui-editor/svg/icon-c.svg';
+// import * as icond from '@/assets/tui-editor/svg/icon-d.svg';
+
+// import '@/assets/tui-editor/css/tui-color-picker.min.css';
+// import '@/assets/tui-editor/css/tui-image-editor.min.css';
+
+// import 'fabric';
+// import 'tui-code-snippet';
+// import 'tui-color-picker';
+// import ImageEditor from 'tui-image-editor';
+
+const defaultTuiEditor = {
+  config: {
+    crossOrigin: 'anonymous',
+    includeUI: {
+      initMenu: 'filter',
+    },
+  },
+  // constructor: ImageEditor,
+  // icons: {
+  //   'menu.normalIcon.path': icond,
+  //   'menu.activeIcon.path': iconb,
+  //   'menu.disabledIcon.path': icona,
+  //   'menu.hoverIcon.path': iconc,
+  //   'submenu.normalIcon.path': icond,
+  //   'submenu.activeIcon.path': iconc,
+  // },
+  // script: [],
+  // style: [],
+};
 
 export default {
   data: function() {
@@ -62,11 +127,13 @@ export default {
     'urlLoad' :  {type: String, default: undefined}, 
     'stepsBeforeSave': {type: Number, default: 10}, 
     'onUploadAsync': {type: Function, default: async () => {}},
+    'tuiEditorConfig': {type: Object, default: () => {}}
   },
 
   created() {
     window.addEventListener('resize', () => {
-      document.querySelector('#custom_gjs').style.height = (window.innerHeight - 50) + 'px';
+      let el = document.querySelector('#custom_gjs');
+      if (el && el.style) el.style.height = (window.innerHeight - 50) + 'px';
     });
   },
   mounted: async function() {
@@ -108,6 +175,16 @@ export default {
         scripts = scripts.concat(this.scripts);
       }
 
+      let canvasCss = `
+        .gjs-dashed div[data-gjs-type]:not(*[data-gjs-type="default"]) {min-height: 20px; min-width: 20px}
+        .gjs-dashed div[data-gjs-type="bs_container"] {height: 100%;}
+        .gjs-dashed div[data-gjs-type="bs_tabs-panes"],.gjs-dashed div[data-gjs-type="bs_card_container"] {min-height: 72px}
+        .gjs-dashed div[data-gjs-type="bs_row"],
+        .gjs-dashed div[data-gjs-type="bs_col"] {min-height: 24px;}
+        .gjs-dashed div[data-gjs-type="bs_tabs-tab-pane"] {outline: 1px dashed rgba(170,170,170,0.7);display: block !important;opacity:0.6 !important;}
+        .gjs-dashed div[data-gjs-type="bs_tabs-tab-pane"].show {outline: 1px dashed red !important;opacity:1 !important;}
+        div[data-gjs-type="map"] iframe.gjs-no-pointer {width: inherit !important;}
+      `;
       let style = this.css;
       let urlStore = this.urlStore;
       let urlLoad = this.urlLoad;
@@ -115,6 +192,7 @@ export default {
       let stepsBeforeSave = this.stepsBeforeSave;
       let height = window.innerHeight - 50;
       let allowExport = this.allowExport;
+      let tuiEditorConfig = {...defaultTuiEditor, ...this.tuiEditorConfig};
 
       let editor = grapesjs.init({
         avoidInlineStyle: 1,
@@ -128,6 +206,7 @@ export default {
         storeStyles: true,
         autorender: false,
         style,
+        canvasCss,
         canvas: {
           styles: styles,
           scripts: scripts,
@@ -138,23 +217,52 @@ export default {
           // disableUpload: false,
           uploadFile: this.uploadAsset,
         },
-        styleManager: { clearProperties: 1 },
+        styleManager: { 
+          clearProperties: 1,
+          sectors: [
+            {
+              name: 'Filters',
+              properties: [ {
+                name: 'Filter',
+                property: 'filter',
+                type: 'filter', // <- the new type
+                full: 1,
+              },
+              // {
+              //   name: 'Gradient',
+              //   property: 'background-image',
+              //   type: 'gradient',
+              //   defaults: 'none'
+              // }
+              ],
+            },
+          ]
+          
+        },
         plugins: [
           "gjs-preset-webpage",
           "grapesjs-lory-slider",
-          'grapesjs-blocks-bootstrap4',
-          grapejsTabs,
-          grapesjsCustomCode,
-          grapesjsTouch,
-          grapesjsParserPostcss,
-          grapesjsTooltip,
-          grapesjsTuiImageEditor,
+          //'grapesjs-blocks-bootstrap4',
+          'grapesjs-tui-image-editor',
+          'grapesjs-custom-code',
+          'grapesjs-touch',
+          'grapesjs-tooltip',
+          'grapesjs-style-filter',
+          'grapesjs-tabs',
+          // 'grapesjs-style-gradient',
+          // 'gjs-style-gradient',
+          // 'grapejs-parser-postcss',
+          // grapejsTabs,          
+          // grapesjsCustomCode,
+          // grapesjsTouch,
+          // grapesjsTooltip,
+          // grapesjsParserPostcss,
         ],
         pluginsOpts: {
           'grapesjs-blocks-bootstrap4': {
               blocks: {},
               blockCategories: {
-                layout: false,
+                layout: true,
                 components: true,
                 typography: true,
                 basic: true,
@@ -169,15 +277,21 @@ export default {
               category: "Extra"
             }
           },
-          "grapesjs-tabs": {
+          'grapesjs-tabs': {
             tabsBlock: {
-              category: "Extra"
+              category: 'Extra'
             }
           },
+          // 'grapesjs-style-gradient': {
+          //   colorPicker: 'default',
+          //   grapickOpts: {
+          //     min: 1,
+          //     max: 99 
+          //   }
+          // },
           "gjs-preset-webpage": {
             modalImportTitle: "Import Template",
-            modalImportLabel:
-              '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
+            modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
             modalImportContent: function(editor) {
               return editor.getHtml() + "<style>" + editor.getCss() + "</style>";
             },
@@ -185,7 +299,8 @@ export default {
             aviaryOpts: false,
             blocksBasicOpts: { flexGrid: 1 },
             customStyleManager,
-          }
+          }, 
+          'grapesjs-tui-image-editor': tuiEditorConfig,
         },
         storageManager: {
           id: 'gjseditor-',         // Prefix identifier that will be used inside storing and loading
@@ -267,21 +382,21 @@ export default {
 
 
 
-    ___editorLoaded() {
-      console.log('Editor onloaded');
-      if (this.autoload) {
-        let response = Rest.get(this.urlLoad, {_t: Date.now()})
+    // ___editorLoaded() {
+    //   console.log('Editor onloaded');
+    //   if (this.autoload) {
+    //     let response = Rest.get(this.urlLoad, {_t: Date.now()})
         
-        if (response && response.data && response.data.result) {
-            this.getEditor().setStyle(response.data.result.css);
-            this.getEditor().setComponents(response.data.result.html);
-        }
-      }
-      else if (this.html) {
-        this.getEditor().setStyle(this.css);
-        this.getEditor().setComponents(this.html);
-      }
-    },
+    //     if (response && response.data && response.data.result) {
+    //         this.getEditor().setStyle(response.data.result.css);
+    //         this.getEditor().setComponents(response.data.result.html);
+    //     }
+    //   }
+    //   else if (this.html) {
+    //     this.getEditor().setStyle(this.css);
+    //     this.getEditor().setComponents(this.html);
+    //   }
+    // },
 
     editorChanged() {
       // console.log('Editor on changed');
@@ -377,5 +492,9 @@ export default {
     padding: 10px;
     width: 33.3333%;
     border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  }
+
+  .gjs-mdl-dialog {
+    max-width: inherit !important;
   }
 </style>

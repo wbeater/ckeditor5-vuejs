@@ -187,6 +187,7 @@ export default {
 <style>
 .tui-image-editor-container .tui-image-editor {
     height: 100%;
+    top: 0px !important;
 }
 
 .tui-image-editor-container .tui-image-editor-main {

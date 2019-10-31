@@ -1,8 +1,24 @@
 <template>
     <div>
         <input type="file" accept="image/*" id="input-image-file" @change="imageChanged">
-        <v-btn label="Download" @click.stop="download"></v-btn>
-        <tui-image-editor ref="tuiImageEditor" :include-ui="useDefaultUI" :options="options"></tui-image-editor>
+        <v-btn label="Download" @click.stop="showImageEditor">Show Image Editor</v-btn>
+
+        <v-dialog persistent v-model="editDialog.show" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <v-card>
+            <v-toolbar dense dark color="#443b3b">
+                <v-btn icon dark @click="editDialog.show = false;">
+                <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>{{'Chỉnh sửa ảnh'}}</v-toolbar-title>&nbsp;&nbsp;
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                </v-toolbar-items>
+            </v-toolbar>
+            <v-list class="py-0" :style="{height: editDialog.height + 'px'}">
+                <tui-image-editor ref="tuiImageEditor" :include-ui="true" :options="editDialog.options"></tui-image-editor>
+            </v-list>
+        </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -28,17 +44,43 @@ export default {
             options: { // for tui-image-editor component's "options" prop
                 cssMaxWidth: 700,
                 cssMaxHeight: 500
-            }
+            },
+            editDialog: {
+                show: false,
+                options: { 
+                // for tui-image-editor component's "options" prop
+                cssMaxWidth: 1024,
+                cssMaxHeight: 800,
+                includeUI: {
+                    initMenu: 'filter',
+                }
+                },
+                height: 800,
+            },
         }
     },
     mounted() {
-        let ref = this.$refs.tuiImageEditor;
-        console.log('tuiImageEditor: ', ref);
 
-        ref.loadUrl('http://beta.futurejs.com/wp-content/plugins/affiliate-manager/cors.php?url=http:/beta.futurejs.com/wp-content/uploads/2019/10/110-153656940251222853823-1537240320282510680630.jpg');
+        
     },
 
+
+
     methods: {
+        showImageEditor () {
+            this.editDialog.height = window.innerHeight - 50;
+
+            (async () => {
+                this.editDialog.show = true;
+                await this.$nextTick();
+                let ref = this.$refs.tuiImageEditor;
+            
+                if (ref) {
+                    console.log('tuiImageEditor: ', ref);
+                    ref.loadUrl('http://beta.futurejs.com/wp-content/plugins/affiliate-manager/cors.php?url=http:/beta.futurejs.com/wp-content/uploads/2019/10/110-153656940251222853823-1537240320282510680630.jpg');
+                }
+            })()
+        },
         imageChanged(event) {
              
             console.log('Event file changed: ', event);

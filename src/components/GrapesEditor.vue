@@ -297,7 +297,10 @@ export default {
             },
             // filestackOpts: null, //{ key: 'AYmqZc2e8RLGLE7TGkX3Hz' },
             aviaryOpts: false,
-            blocksBasicOpts: { flexGrid: 1 },
+            blocksBasicOpts: { 
+              flexGrid: 1,
+              stylePrefix: 'basic-',
+            },
             customStyleManager,
           }, 
           'grapesjs-tui-image-editor': tuiEditorConfig,

@@ -1,6 +1,6 @@
 <template>
     <div id="custom_gjs" style="overflow:hidden;height:0px;">
-      <div v-if="!!html" v-html="html"></div>
+      <div v-if="!!html" v-html="html + '<script>' + js + '</script>'"></div>
       <div v-else>
         <slot></slot>
       </div>
@@ -118,6 +118,7 @@ export default {
 
     'html': {type: String, default: () => ('')}, 
     'css': {type: String, default: ''},
+    'js': {type: String, default: ''},
 
     'scripts': {type: Array, default: () => []},
     'stylesheets': {type: Array, default: () => []},
@@ -195,6 +196,7 @@ export default {
       let tuiEditorConfig = {...defaultTuiEditor, ...this.tuiEditorConfig};
 
       let editor = grapesjs.init({
+        allowScripts: 1,
         avoidInlineStyle: 1,
         height: height + 'px',
         container: "#custom_gjs",

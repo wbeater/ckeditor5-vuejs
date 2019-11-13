@@ -1,300 +1,508 @@
-export default [
-    {
-        name: 'General',
-        buildProps: ['float', 'display', 'position', 'top', 'right', 'left', 'bottom'],
-        properties: [{
-            name: 'Alignment',
-            property: 'float',
-            type: 'radio',
-            defaults: 'none',
-            list: [
-                { value: 'none', className: 'fa fa-times' },
-                { value: 'left', className: 'fa fa-align-left' },
-                { value: 'right', className: 'fa fa-align-right' }
-            ],
-        },
-        { property: 'position', type: 'select' }
-        ],
-    },
-    {
-        name: 'Dimension',
-        open: false,
-        buildProps: ['width', 'flex-width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
-        properties: [{
-            id: 'flex-width',
-            type: 'integer',
-            name: 'Width',
-            units: ['px', '%'],
-            property: 'flex-basis',
-            toRequire: 1,
-        }, {
-            property: 'margin',
-            properties: [
-                { name: 'Top', property: 'margin-top' },
-                { name: 'Right', property: 'margin-right' },
-                { name: 'Bottom', property: 'margin-bottom' },
-                { name: 'Left', property: 'margin-left' }
-            ],
-        }, {
-            property: 'padding',
-            properties: [
-                { name: 'Top', property: 'padding-top' },
-                { name: 'Right', property: 'padding-right' },
-                { name: 'Bottom', property: 'padding-bottom' },
-                { name: 'Left', property: 'padding-left' }
-            ],
-        }],
-    },
-    {
-        name: 'Typography',
-        open: false,
-        buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'text-shadow'],
-        properties: [
-            { name: 'Font', property: 'font-family' },
-            { name: 'Weight', property: 'font-weight' },
-            { name: 'Font color', property: 'color' },
-            {
-                property: 'text-align',
-                type: 'radio',
-                defaults: 'left',
-                list: [
-                    { value: 'left', name: 'Left', className: 'fa fa-align-left' },
-                    { value: 'center', name: 'Center', className: 'fa fa-align-center' },
-                    { value: 'right', name: 'Right', className: 'fa fa-align-right' },
-                    { value: 'justify', name: 'Justify', className: 'fa fa-align-justify' }
-                ],
-            }, {
-                property: 'text-decoration',
+export default function(useGoogleFont) {
+    let defaultFonts = [
+        { name: 'Arial', value: "Arial,  Helvetica, sans-serif"}, 
+        { name: 'Arial Black', value: "Arial Black,  Gadget, sans-serif"}, 
+        { name: 'Brush Script MT', value: "Brush Script MT, sans-serif"}, 
+        { name: 'Comic Sans MS', value: "Comic Sans MS,  cursive, sans-serif"}, 
+        { name: 'Courier New', value: "Courier New,  Courier, monospace"}, 
+        { name: 'Georgia', value: "Georgia,  serif, sans-serif"}, 
+        { name: 'Helvetica', value: "Helvetica,  serif, sans-serif"}, 
+        { name: 'Impact', value: "Impact,  Charcoal, sans-serif"}, 
+        { name: 'Lucida Sans Unicode', value: "Lucida Sans Unicode,  Lucida Grande, sans-serif"}, 
+        { name: 'Tahoma', value: "Tahoma,  Geneva, sans-serif"}, 
+        { name: 'Times New Roman', value: "Times New Roman,  Times, serif, sans-serif"}, 
+        { name: 'Trebuchet MS', value: "Trebuchet MS,  Helvetica, sans-serif"}, 
+        { name: 'Verdana', value: "Verdana,  Geneva, sans-serif"}, 
+    ];
+
+    if (useGoogleFont) {
+        defaultFonts = defaultFonts.concat([
+            { name: 'Google Roboto', value: "'Roboto', sans-serif"}, 
+            { name: 'Google Open Sans', value: "'Open Sans', sans-serif"}, 
+            { name: 'Google Montserrat', value: "'Montserrat', sans-serif"}, 
+            { name: 'Google Roboto Condensed', value: "'Roboto Condensed', sans-serif"}, 
+            { name: 'Google Source Sans Pro', value: "'Source Sans Pro', sans-serif"}, 
+            { name: 'Google Oswald', value: "'Oswald', sans-serif"}, 
+            { name: 'Google Roboto Mono', value: "'Roboto Mono', monospace"}, 
+            { name: 'Google Roboto Slab', value: "'Roboto Slab', serif"}, 
+            { name: 'Google Merriweather', value: "'Merriweather', serif"}, 
+            { name: 'Google Noto Sans', value: "'Noto Sans', sans-serif"}, 
+            { name: 'Google Playfair Display', value: "'Playfair Display', serif"}, 
+            { name: 'Google Open Sans Condensed', value: "'Open Sans Condensed', sans-serif"}, 
+            { name: 'Google Muli', value: "'Muli', sans-serif"}, 
+            { name: 'Google Lora', value: "'Lora', serif"}, 
+            { name: 'Google Nunito', value: "'Nunito', sans-serif"}, 
+            { name: 'Google Noto Serif', value: "'Noto Serif', serif"}, 
+            { name: 'Google Fira Sans', value: "'Fira Sans', sans-serif"}, 
+            { name: 'Google Inconsolata', value: "'Inconsolata', monospace"}, 
+            { name: 'Google Quicksand', value: "'Quicksand', sans-serif"}, 
+            { name: 'Google Arimo', value: "'Arimo', sans-serif"}, 
+            { name: 'Google Nunito Sans', value: "'Nunito Sans', sans-serif"}, 
+            { name: 'Google Dosis', value: "'Dosis', sans-serif"}, 
+            { name: 'Google Cabin', value: "'Cabin', sans-serif"}, 
+            { name: 'Google Josefin Sans', value: "'Josefin Sans', sans-serif"}, 
+            { name: 'Google Varela Round', value: "'Varela Round', sans-serif"}, 
+            { name: 'Google Anton', value: "'Anton', sans-serif"}, 
+            { name: 'Google Source Code Pro', value: "'Source Code Pro', monospace"}, 
+            { name: 'Google Lobster', value: "'Lobster', cursive"}, 
+            { name: 'Google Yanone Kaffeesatz', value: "'Yanone Kaffeesatz', sans-serif"}, 
+            { name: 'Google Barlow', value: "'Barlow', sans-serif"}, 
+            { name: 'Google Dancing Script', value: "'Dancing Script', cursive"}, 
+            { name: 'Google Pacifico', value: "'Pacifico', cursive"}, 
+            { name: 'Google Exo 2', value: "'Exo 2', sans-serif"}, 
+            { name: 'Google Asap', value: "'Asap', sans-serif"}, 
+            { name: 'Google Archivo Narrow', value: "'Archivo Narrow', sans-serif"}, 
+            { name: 'Google EB Garamond', value: "'EB Garamond', serif"}, 
+            { name: 'Google Barlow Semi Condensed', value: "'Barlow Semi Condensed', sans-serif"}, 
+            { name: 'Google Comfortaa', value: "'Comfortaa', cursive"}, 
+            { name: 'Google Barlow Condensed', value: "'Barlow Condensed', sans-serif"}, 
+            { name: 'Google IBM Plex Sans', value: "'IBM Plex Sans', sans-serif"}, 
+            { name: 'Google Maven Pro', value: "'Maven Pro', sans-serif"}, 
+            { name: 'Google Kanit', value: "'Kanit', sans-serif"}, 
+            { name: 'Google Amatic SC', value: "'Amatic SC', cursive"}, 
+            { name: 'Google Exo', value: "'Exo', sans-serif"}, 
+            { name: 'Google Play', value: "'Play', sans-serif"}, 
+            { name: 'Google Fira Sans Condensed', value: "'Fira Sans Condensed', sans-serif"}, 
+            { name: 'Google Noto Sans SC', value: "'Noto Sans SC', sans-serif"}, 
+            { name: 'Google Vollkorn', value: "'Vollkorn', serif"}, 
+            { name: 'Google Prompt', value: "'Prompt', sans-serif"}, 
+            { name: 'Google Francois One', value: "'Francois One', sans-serif"}, 
+            { name: 'Google Alegreya Sans', value: "'Alegreya Sans', sans-serif"}, 
+            { name: 'Google Cuprum', value: "'Cuprum', sans-serif"}, 
+            { name: 'Google Rokkitt', value: "'Rokkitt', serif"}, 
+            { name: 'Google Cormorant Garamond', value: "'Cormorant Garamond', serif"}, 
+            { name: 'Google Alegreya', value: "'Alegreya', serif"}, 
+            { name: 'Google Alfa Slab One', value: "'Alfa Slab One', cursive"}, 
+            { name: 'Google Noticia Text', value: "'Noticia Text', serif"}, 
+            { name: 'Google Fira Sans Extra Condensed', value: "'Fira Sans Extra Condensed', sans-serif"}, 
+            { name: 'Google Tinos', value: "'Tinos', serif"}, 
+            { name: 'Google Old Standard TT', value: "'Old Standard TT', serif"}, 
+            { name: 'Google Saira Extra Condensed', value: "'Saira Extra Condensed', sans-serif"}, 
+            { name: 'Google IBM Plex Serif', value: "'IBM Plex Serif', serif"}, 
+            { name: 'Google Patrick Hand', value: "'Patrick Hand', cursive"}, 
+            { name: 'Google Baloo Bhai', value: "'Baloo Bhai', cursive"}, 
+            { name: 'Google M PLUS 1p', value: "'M PLUS 1p', sans-serif"}, 
+            { name: 'Google Prata', value: "'Prata', serif"}, 
+            { name: 'Google Archivo', value: "'Archivo', sans-serif"}, 
+            { name: 'Google Saira Semi Condensed', value: "'Saira Semi Condensed', sans-serif"}, 
+            { name: 'Google Philosopher', value: "'Philosopher', sans-serif"}, 
+            { name: 'Google Bangers', value: "'Bangers', cursive"}, 
+            { name: 'Google Playfair Display SC', value: "'Playfair Display SC', serif"}, 
+            { name: 'Google Cabin Condensed', value: "'Cabin Condensed', sans-serif"}, 
+            { name: 'Google Paytone One', value: "'Paytone One', sans-serif"}, 
+            { name: 'Google Montserrat Alternates', value: "'Montserrat Alternates', sans-serif"}, 
+            { name: 'Google Taviraj', value: "'Taviraj', serif"}, 
+            { name: 'Google Spectral', value: "'Spectral', serif"}, 
+            { name: 'Google Lalezar', value: "'Lalezar', cursive"}, 
+            { name: 'Google Asap Condensed', value: "'Asap Condensed', sans-serif"}, 
+            { name: 'Google M PLUS Rounded 1c', value: "'M PLUS Rounded 1c', sans-serif"}, 
+            { name: 'Google Sigmar One', value: "'Sigmar One', cursive"}, 
+            { name: 'Google Saira', value: "'Saira', sans-serif"}, 
+            { name: 'Google Pridi', value: "'Pridi', serif"}, 
+            { name: 'Google Mitr', value: "'Mitr', sans-serif"}, 
+            { name: 'Google Baloo', value: "'Baloo', cursive"}, 
+            { name: 'Google Cormorant', value: "'Cormorant', serif"}, 
+            { name: 'Google Sarabun', value: "'Sarabun', sans-serif"}, 
+            { name: 'Google Saira Condensed', value: "'Saira Condensed', sans-serif"}, 
+            { name: 'Google Yeseva One', value: "'Yeseva One', cursive"}, 
+            { name: 'Google Alegreya Sans SC', value: "'Alegreya Sans SC', sans-serif"}, 
+            { name: 'Google IBM Plex Mono', value: "'IBM Plex Mono', monospace"}, 
+            { name: 'Google Jura', value: "'Jura', sans-serif"}, 
+            { name: 'Google Bevan', value: "'Bevan', cursive"}, 
+            { name: 'Google Sawarabi Gothic', value: "'Sawarabi Gothic', sans-serif"}, 
+            { name: 'Google Cousine', value: "'Cousine', monospace"}, 
+            { name: 'Google Markazi Text', value: "'Markazi Text', serif"}, 
+            { name: 'Google VT323', value: "'VT323', monospace"}, 
+            { name: 'Google Baloo Bhaina', value: "'Baloo Bhaina', cursive"}, 
+            { name: 'Google Space Mono', value: "'Space Mono', monospace"}, 
+            { name: 'Google Encode Sans', value: "'Encode Sans', sans-serif"}, 
+            { name: 'Google Arima Madurai', value: "'Arima Madurai', cursive"}, 
+            { name: 'Google Arsenal', value: "'Arsenal', sans-serif"}, 
+            { name: 'Google Itim', value: "'Itim', cursive"}, 
+            { name: 'Google Noto Serif SC', value: "'Noto Serif SC', serif"}, 
+            { name: 'Google Pangolin', value: "'Pangolin', cursive"}, 
+            { name: 'Google Lemonada', value: "'Lemonada', cursive"}, 
+            { name: 'Google Encode Sans Condensed', value: "'Encode Sans Condensed', sans-serif"}, 
+            { name: 'Google Bai Jamjuree', value: "'Bai Jamjuree', sans-serif"}, 
+            { name: 'Google Alegreya SC', value: "'Alegreya SC', serif"}, 
+            { name: 'Google Noto Serif TC', value: "'Noto Serif TC', serif"}, 
+            { name: 'Google Judson', value: "'Judson', serif"}, 
+            { name: 'Google Krub', value: "'Krub', sans-serif"}, 
+            { name: 'Google Big Shoulders Text', value: "'Big Shoulders Text', cursive"}, 
+            { name: 'Google Trirong', value: "'Trirong', serif"}, 
+            { name: 'Google Niramit', value: "'Niramit', sans-serif"}, 
+            { name: 'Google Bungee Inline', value: "'Bungee Inline', cursive"}, 
+            { name: 'Google Mali', value: "'Mali', cursive"}, 
+            { name: 'Google Pattaya', value: "'Pattaya', sans-serif"}, 
+            { name: 'Google Rosario', value: "'Rosario', sans-serif"}, 
+            { name: 'Google Bungee', value: "'Bungee', cursive"}, 
+            { name: 'Google Lexend Deca', value: "'Lexend Deca', sans-serif"}, 
+            { name: 'Google Sriracha', value: "'Sriracha', cursive"}, 
+            { name: 'Google Metrophobic', value: "'Metrophobic', sans-serif"}, 
+            { name: 'Google Faustina', value: "'Faustina', serif"}, 
+            { name: 'Google Encode Sans Semi Expanded', value: "'Encode Sans Semi Expanded', sans-serif"}, 
+            { name: 'Google Encode Sans Expanded', value: "'Encode Sans Expanded', sans-serif"}, 
+            { name: 'Google Chakra Petch', value: "'Chakra Petch', sans-serif"}, 
+            { name: 'Google IBM Plex Sans Condensed', value: "'IBM Plex Sans Condensed', sans-serif"}, 
+            { name: 'Google Maitree', value: "'Maitree', serif"}, 
+            { name: 'Google Baloo Bhaijaan', value: "'Baloo Bhaijaan', cursive"}, 
+            { name: 'Google Cormorant Infant', value: "'Cormorant Infant', serif"}, 
+            { name: 'Google Chonburi', value: "'Chonburi', cursive"}, 
+            { name: 'Google Athiti', value: "'Athiti', sans-serif"}, 
+            { name: 'Google Sedgwick Ave', value: "'Sedgwick Ave', cursive"}, 
+            { name: 'Google Patrick Hand SC', value: "'Patrick Hand SC', cursive"}, 
+            { name: 'Google Cormorant SC', value: "'Cormorant SC', serif"}, 
+            { name: 'Google Andika', value: "'Andika', sans-serif"}, 
+            { name: 'Google Podkova', value: "'Podkova', serif"}, 
+            { name: 'Google Bungee Shade', value: "'Bungee Shade', cursive"}, 
+            { name: 'Google Baloo Da', value: "'Baloo Da', cursive"}, 
+            { name: 'Google Spectral SC', value: "'Spectral SC', serif"}, 
+            { name: 'Google Baloo Thambi', value: "'Baloo Thambi', cursive"}, 
+            { name: 'Google Baloo Chettan', value: "'Baloo Chettan', cursive"}, 
+            { name: 'Google Cormorant Upright', value: "'Cormorant Upright', serif"}, 
+            { name: 'Google Encode Sans Semi Condensed', value: "'Encode Sans Semi Condensed', sans-serif"}, 
+            { name: 'Google Literata', value: "'Literata', serif"}, 
+            { name: 'Google Charm', value: "'Charm', cursive"}, 
+            { name: 'Google Baloo Paaji', value: "'Baloo Paaji', cursive"}, 
+            { name: 'Google K2D', value: "'K2D', sans-serif"}, 
+            { name: 'Google Farsan', value: "'Farsan', cursive"}, 
+            { name: 'Google David Libre', value: "'David Libre', serif"}, 
+            { name: 'Google Saira Stencil One', value: "'Saira Stencil One', cursive"}, 
+            { name: 'Google Coiny', value: "'Coiny', cursive"}, 
+            { name: 'Google Livvic', value: "'Livvic', sans-serif"}, 
+            { name: 'Google Baloo Tamma', value: "'Baloo Tamma', cursive"}, 
+            { name: 'Google Manuale', value: "'Manuale', serif"}, 
+            { name: 'Google Darker Grotesque', value: "'Darker Grotesque', sans-serif"}, 
+            { name: 'Google Thasadith', value: "'Thasadith', sans-serif"}, 
+            { name: 'Google Vollkorn SC', value: "'Vollkorn SC', serif"}, 
+            { name: 'Google Barriecito', value: "'Barriecito', cursive"}, 
+            { name: 'Google Srisakdi', value: "'Srisakdi', cursive"}, 
+            { name: 'Google Be Vietnam', value: "'Be Vietnam', sans-serif"}, 
+            { name: 'Google Kodchasan', value: "'Kodchasan', sans-serif"}, 
+            { name: 'Google Hepta Slab', value: "'Hepta Slab', serif"}, 
+            { name: 'Google Cormorant Unicase', value: "'Cormorant Unicase', serif"}, 
+            { name: 'Google Grenze', value: "'Grenze', serif"}, 
+            { name: 'Google Charmonman', value: "'Charmonman', cursive"}, 
+            { name: 'Google Baloo Tammudu', value: "'Baloo Tammudu', cursive"}, 
+            { name: 'Google Big Shoulders Display', value: "'Big Shoulders Display', cursive"}, 
+            { name: 'Google KoHo', value: "'KoHo', sans-serif"}, 
+            { name: 'Google Fahkwang', value: "'Fahkwang', sans-serif"}, 
+            { name: 'Google Crimson Pro', value: "'Crimson Pro', serif"}, 
+            { name: 'Google Major Mono Display', value: "'Major Mono Display', monospace"}, 
+            { name: 'Google Bungee Outline', value: "'Bungee Outline', cursive"}, 
+            { name: 'Google Sedgwick Ave Display', value: "'Sedgwick Ave Display', cursive"}, 
+            { name: 'Google Bungee Hairline', value: "'Bungee Hairline', cursive"}, 
+            { name: 'Google Lexend Exa', value: "'Lexend Exa', sans-serif"}, 
+            { name: 'Google Lexend Tera', value: "'Lexend Tera', sans-serif"}, 
+            { name: 'Google Lexend Giga', value: "'Lexend Giga', sans-serif"}, 
+            { name: 'Google Lexend Zetta', value: "'Lexend Zetta', sans-serif"}, 
+            { name: 'Google Lexend Mega', value: "'Lexend Mega', sans-serif"}, 
+            { name: 'Google Lexend Peta', value: "'Lexend Peta', sans-serif"}, 
+            { name: 'Google Bahianita', value: "'Bahianita', cursive"}, 
+        ]);
+    }
+
+    return [
+        {
+            name: 'General',
+            buildProps: ['float', 'display', 'position', 'top', 'right', 'left', 'bottom'],
+            properties: [{
+                name: 'Alignment',
+                property: 'float',
                 type: 'radio',
                 defaults: 'none',
                 list: [
-                    { value: 'none', name: 'None', className: 'fa fa-times' },
-                    { value: 'underline', name: 'underline', className: 'fa fa-underline' },
-                    { value: 'line-through', name: 'Line-through', className: 'fa fa-strikethrough' }
+                    { value: 'none', className: 'fa fa-times' },
+                    { value: 'left', className: 'fa fa-align-left' },
+                    { value: 'right', className: 'fa fa-align-right' }
                 ],
-            }, {
-                property: 'text-shadow',
-                properties: [
-                    { name: 'X position', property: 'text-shadow-h' },
-                    { name: 'Y position', property: 'text-shadow-v' },
-                    { name: 'Blur', property: 'text-shadow-blur' },
-                    { name: 'Color', property: 'text-shadow-color' }
-                ],
-            }],
-    },
-    {
-        name: 'Decorations',
-        open: false,
-        buildProps: ['opacity', 'background-color', 'border-radius', 'border', 'box-shadow', 'background'],
-        properties: [{
-            type: 'slider',
-            property: 'opacity',
-            defaults: 1,
-            step: 0.01,
-            max: 1,
-            min: 0,
-        }, {
-            property: 'border-radius',
-            properties: [
-                { name: 'Top', property: 'border-top-left-radius' },
-                { name: 'Right', property: 'border-top-right-radius' },
-                { name: 'Bottom', property: 'border-bottom-left-radius' },
-                { name: 'Left', property: 'border-bottom-right-radius' }
+            },
+            { property: 'position', type: 'select' }
             ],
-        }, {
-            property: 'box-shadow',
-            properties: [
-                { name: 'X position', property: 'box-shadow-h' },
-                { name: 'Y position', property: 'box-shadow-v' },
-                { name: 'Blur', property: 'box-shadow-blur' },
-                { name: 'Spread', property: 'box-shadow-spread' },
-                { name: 'Color', property: 'box-shadow-color' },
-                { name: 'Shadow type', property: 'box-shadow-type' }
-            ],
-        }, {
-            property: 'background',
-            properties: [
-                { name: 'Image', property: 'background-image' },
-                { name: 'Repeat', property: 'background-repeat' },
-                { name: 'Position', property: 'background-position' },
-                { name: 'Attachment', property: 'background-attachment' },
-                { name: 'Size', property: 'background-size' }
-            ],
-        },],
-    },
-    {
-        name: 'Extra',
-        open: false,
-        buildProps: ['transition', 'perspective', 'transform'],
-        properties: [{
-            property: 'transition',
-            properties: [
-                { name: 'Property', property: 'transition-property' },
-                { name: 'Duration', property: 'transition-duration' },
-                { name: 'Easing', property: 'transition-timing-function' }
-            ],
-        }, {
-            property: 'transform',
-            properties: [
-                { name: 'Rotate X', property: 'transform-rotate-x' },
-                { name: 'Rotate Y', property: 'transform-rotate-y' },
-                { name: 'Rotate Z', property: 'transform-rotate-z' },
-                { name: 'Scale X', property: 'transform-scale-x' },
-                { name: 'Scale Y', property: 'transform-scale-y' },
-                { name: 'Scale Z', property: 'transform-scale-z' }
-            ],
-        }]
-    },
-    {
-        name: 'Flex',
-        open: false,
-        properties: [{
-            name: 'Flex Container',
-            property: 'display',
-            type: 'select',
-            defaults: 'block',
-            list: [
-                { value: 'block', name: 'Disable' },
-                { value: 'flex', name: 'Enable' }
-            ],
-        }, {
-            name: 'Flex Parent',
-            property: 'label-parent-flex',
-            type: 'integer',
-        }, {
-            name: 'Direction',
-            property: 'flex-direction',
-            type: 'radio',
-            defaults: 'row',
-            list: [{
-                value: 'row',
-                name: 'Row',
-                className: 'icons-flex icon-dir-row',
-                title: 'Row',
-            }, {
-                value: 'row-reverse',
-                name: 'Row reverse',
-                className: 'icons-flex icon-dir-row-rev',
-                title: 'Row reverse',
-            }, {
-                value: 'column',
-                name: 'Column',
-                title: 'Column',
-                className: 'icons-flex icon-dir-col',
-            }, {
-                value: 'column-reverse',
-                name: 'Column reverse',
-                title: 'Column reverse',
-                className: 'icons-flex icon-dir-col-rev',
-            }],
-        }, {
-            name: 'Justify',
-            property: 'justify-content',
-            type: 'radio',
-            defaults: 'flex-start',
-            list: [{
-                value: 'flex-start',
-                className: 'icons-flex icon-just-start',
-                title: 'Start',
-            }, {
-                value: 'flex-end',
-                title: 'End',
-                className: 'icons-flex icon-just-end',
-            }, {
-                value: 'space-between',
-                title: 'Space between',
-                className: 'icons-flex icon-just-sp-bet',
-            }, {
-                value: 'space-around',
-                title: 'Space around',
-                className: 'icons-flex icon-just-sp-ar',
-            }, {
-                value: 'center',
-                title: 'Center',
-                className: 'icons-flex icon-just-sp-cent',
-            }],
-        }, {
-            name: 'Align',
-            property: 'align-items',
-            type: 'radio',
-            defaults: 'center',
-            list: [{
-                value: 'flex-start',
-                title: 'Start',
-                className: 'icons-flex icon-al-start',
-            }, {
-                value: 'flex-end',
-                title: 'End',
-                className: 'icons-flex icon-al-end',
-            }, {
-                value: 'stretch',
-                title: 'Stretch',
-                className: 'icons-flex icon-al-str',
-            }, {
-                value: 'center',
-                title: 'Center',
-                className: 'icons-flex icon-al-center',
-            }],
-        }, {
-            name: 'Flex Children',
-            property: 'label-parent-flex',
-            type: 'integer',
-        }, {
-            name: 'Order',
-            property: 'order',
-            type: 'integer',
-            defaults: 0,
-            min: 0
-        }, {
-            name: 'Flex',
-            property: 'flex',
-            type: 'composite',
+        },
+        {
+            name: 'Dimension',
+            open: false,
+            buildProps: ['width', 'flex-width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
             properties: [{
-                name: 'Grow',
-                property: 'flex-grow',
+                id: 'flex-width',
                 type: 'integer',
-                defaults: 0,
-                min: 0
-            }, {
-                name: 'Shrink',
-                property: 'flex-shrink',
-                type: 'integer',
-                defaults: 0,
-                min: 0
-            }, {
-                name: 'Basis',
+                name: 'Width',
+                units: ['px', '%'],
                 property: 'flex-basis',
+                toRequire: 1,
+            }, {
+                property: 'margin',
+                properties: [
+                    { name: 'Top', property: 'margin-top' },
+                    { name: 'Right', property: 'margin-right' },
+                    { name: 'Bottom', property: 'margin-bottom' },
+                    { name: 'Left', property: 'margin-left' }
+                ],
+            }, {
+                property: 'padding',
+                properties: [
+                    { name: 'Top', property: 'padding-top' },
+                    { name: 'Right', property: 'padding-right' },
+                    { name: 'Bottom', property: 'padding-bottom' },
+                    { name: 'Left', property: 'padding-left' }
+                ],
+            }],
+        },
+        {
+            name: 'Typography',
+            open: false,
+            buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'text-shadow'],
+            properties: [
+                { 
+                    name: 'Font', 
+                    property: 'font-family',
+                    list: defaultFonts,
+                },
+                { name: 'Weight', property: 'font-weight' },
+                { name: 'Font color', property: 'color' },
+                {
+                    property: 'text-align',
+                    type: 'radio',
+                    defaults: 'left',
+                    list: [
+                        { value: 'left', name: 'Left', className: 'fa fa-align-left' },
+                        { value: 'center', name: 'Center', className: 'fa fa-align-center' },
+                        { value: 'right', name: 'Right', className: 'fa fa-align-right' },
+                        { value: 'justify', name: 'Justify', className: 'fa fa-align-justify' }
+                    ],
+                }, {
+                    property: 'text-decoration',
+                    type: 'radio',
+                    defaults: 'none',
+                    list: [
+                        { value: 'none', name: 'None', className: 'fa fa-times' },
+                        { value: 'underline', name: 'underline', className: 'fa fa-underline' },
+                        { value: 'line-through', name: 'Line-through', className: 'fa fa-strikethrough' }
+                    ],
+                }, {
+                    property: 'text-shadow',
+                    properties: [
+                        { name: 'X position', property: 'text-shadow-h' },
+                        { name: 'Y position', property: 'text-shadow-v' },
+                        { name: 'Blur', property: 'text-shadow-blur' },
+                        { name: 'Color', property: 'text-shadow-color' }
+                    ],
+                }],
+        },
+        {
+            name: 'Decorations',
+            open: false,
+            buildProps: ['opacity', 'background-color', 'border-radius', 'border', 'box-shadow', 'background'],
+            properties: [{
+                type: 'slider',
+                property: 'opacity',
+                defaults: 1,
+                step: 0.01,
+                max: 1,
+                min: 0,
+            }, {
+                property: 'border-radius',
+                properties: [
+                    { name: 'Top', property: 'border-top-left-radius' },
+                    { name: 'Right', property: 'border-top-right-radius' },
+                    { name: 'Bottom', property: 'border-bottom-left-radius' },
+                    { name: 'Left', property: 'border-bottom-right-radius' }
+                ],
+            }, {
+                property: 'box-shadow',
+                properties: [
+                    { name: 'X position', property: 'box-shadow-h' },
+                    { name: 'Y position', property: 'box-shadow-v' },
+                    { name: 'Blur', property: 'box-shadow-blur' },
+                    { name: 'Spread', property: 'box-shadow-spread' },
+                    { name: 'Color', property: 'box-shadow-color' },
+                    { name: 'Shadow type', property: 'box-shadow-type' }
+                ],
+            }, {
+                property: 'background',
+                properties: [
+                    { name: 'Image', property: 'background-image' },
+                    { name: 'Repeat', property: 'background-repeat' },
+                    { name: 'Position', property: 'background-position' },
+                    { name: 'Attachment', property: 'background-attachment' },
+                    { name: 'Size', property: 'background-size' }
+                ],
+            },],
+        },
+        {
+            name: 'Extra',
+            open: false,
+            buildProps: ['transition', 'perspective', 'transform'],
+            properties: [{
+                property: 'transition',
+                properties: [
+                    { name: 'Property', property: 'transition-property' },
+                    { name: 'Duration', property: 'transition-duration' },
+                    { name: 'Easing', property: 'transition-timing-function' }
+                ],
+            }, {
+                property: 'transform',
+                properties: [
+                    { name: 'Rotate X', property: 'transform-rotate-x' },
+                    { name: 'Rotate Y', property: 'transform-rotate-y' },
+                    { name: 'Rotate Z', property: 'transform-rotate-z' },
+                    { name: 'Scale X', property: 'transform-scale-x' },
+                    { name: 'Scale Y', property: 'transform-scale-y' },
+                    { name: 'Scale Z', property: 'transform-scale-z' }
+                ],
+            }]
+        },
+        {
+            name: 'Flex',
+            open: false,
+            properties: [{
+                name: 'Flex Container',
+                property: 'display',
+                type: 'select',
+                defaults: 'block',
+                list: [
+                    { value: 'block', name: 'Disable' },
+                    { value: 'flex', name: 'Enable' }
+                ],
+            }, {
+                name: 'Flex Parent',
+                property: 'label-parent-flex',
                 type: 'integer',
-                units: ['px', '%', ''],
-                unit: '',
+            }, {
+                name: 'Direction',
+                property: 'flex-direction',
+                type: 'radio',
+                defaults: 'row',
+                list: [{
+                    value: 'row',
+                    name: 'Row',
+                    className: 'icons-flex icon-dir-row',
+                    title: 'Row',
+                }, {
+                    value: 'row-reverse',
+                    name: 'Row reverse',
+                    className: 'icons-flex icon-dir-row-rev',
+                    title: 'Row reverse',
+                }, {
+                    value: 'column',
+                    name: 'Column',
+                    title: 'Column',
+                    className: 'icons-flex icon-dir-col',
+                }, {
+                    value: 'column-reverse',
+                    name: 'Column reverse',
+                    title: 'Column reverse',
+                    className: 'icons-flex icon-dir-col-rev',
+                }],
+            }, {
+                name: 'Justify',
+                property: 'justify-content',
+                type: 'radio',
+                defaults: 'flex-start',
+                list: [{
+                    value: 'flex-start',
+                    className: 'icons-flex icon-just-start',
+                    title: 'Start',
+                }, {
+                    value: 'flex-end',
+                    title: 'End',
+                    className: 'icons-flex icon-just-end',
+                }, {
+                    value: 'space-between',
+                    title: 'Space between',
+                    className: 'icons-flex icon-just-sp-bet',
+                }, {
+                    value: 'space-around',
+                    title: 'Space around',
+                    className: 'icons-flex icon-just-sp-ar',
+                }, {
+                    value: 'center',
+                    title: 'Center',
+                    className: 'icons-flex icon-just-sp-cent',
+                }],
+            }, {
+                name: 'Align',
+                property: 'align-items',
+                type: 'radio',
+                defaults: 'center',
+                list: [{
+                    value: 'flex-start',
+                    title: 'Start',
+                    className: 'icons-flex icon-al-start',
+                }, {
+                    value: 'flex-end',
+                    title: 'End',
+                    className: 'icons-flex icon-al-end',
+                }, {
+                    value: 'stretch',
+                    title: 'Stretch',
+                    className: 'icons-flex icon-al-str',
+                }, {
+                    value: 'center',
+                    title: 'Center',
+                    className: 'icons-flex icon-al-center',
+                }],
+            }, {
+                name: 'Flex Children',
+                property: 'label-parent-flex',
+                type: 'integer',
+            }, {
+                name: 'Order',
+                property: 'order',
+                type: 'integer',
+                defaults: 0,
+                min: 0
+            }, {
+                name: 'Flex',
+                property: 'flex',
+                type: 'composite',
+                properties: [{
+                    name: 'Grow',
+                    property: 'flex-grow',
+                    type: 'integer',
+                    defaults: 0,
+                    min: 0
+                }, {
+                    name: 'Shrink',
+                    property: 'flex-shrink',
+                    type: 'integer',
+                    defaults: 0,
+                    min: 0
+                }, {
+                    name: 'Basis',
+                    property: 'flex-basis',
+                    type: 'integer',
+                    units: ['px', '%', ''],
+                    unit: '',
+                    defaults: 'auto',
+                }],
+            }, {
+                name: 'Align',
+                property: 'align-self',
+                type: 'radio',
                 defaults: 'auto',
-            }],
-        }, {
-            name: 'Align',
-            property: 'align-self',
-            type: 'radio',
-            defaults: 'auto',
-            list: [{
-                value: 'auto',
-                name: 'Auto',
-            }, {
-                value: 'flex-start',
-                title: 'Start',
-                className: 'icons-flex icon-al-start',
-            }, {
-                value: 'flex-end',
-                title: 'End',
-                className: 'icons-flex icon-al-end',
-            }, {
-                value: 'stretch',
-                title: 'Stretch',
-                className: 'icons-flex icon-al-str',
-            }, {
-                value: 'center',
-                title: 'Center',
-                className: 'icons-flex icon-al-center',
-            }],
-        }]
-    }
-];
-
+                list: [{
+                    value: 'auto',
+                    name: 'Auto',
+                }, {
+                    value: 'flex-start',
+                    title: 'Start',
+                    className: 'icons-flex icon-al-start',
+                }, {
+                    value: 'flex-end',
+                    title: 'End',
+                    className: 'icons-flex icon-al-end',
+                }, {
+                    value: 'stretch',
+                    title: 'Stretch',
+                    className: 'icons-flex icon-al-str',
+                }, {
+                    value: 'center',
+                    title: 'Center',
+                    className: 'icons-flex icon-al-center',
+                }],
+            }]
+        }
+    ];    
+} 

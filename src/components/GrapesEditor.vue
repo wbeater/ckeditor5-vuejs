@@ -1,8 +1,10 @@
 <template>
     <div id="custom_gjs" style="overflow:hidden;height:0px;">
-      <div v-if="!!html" v-html="html + '<script>' + js + '</script>'"></div>
+      <div v-if="!!html" v-html="'<style>' + css + '</style>' + html + '<script>' + js + '</script>'"></div>
       <div v-else>
+        <div style="position: absolute;left: -1000px;" v-html="'<style>' + css + '</style>'"></div>
         <slot></slot>
+        <div style="position: absolute;left: -1000px;" v-html="'<script>' + js + '</script>'"></div>
       </div>
     </div>
 </template>
@@ -16,6 +18,7 @@
 import grapesjs from 'grapesjs';
 
 import 'grapesjs-component-countdown';
+import 'grapesjs-flipclock';
 import 'grapesjs-lory-slider';
 import 'grapesjs-blocks-bootstrap4';
 // import 'grapesjs-style-gradient';
@@ -114,11 +117,19 @@ export default {
   props: {
     //'openAssets': {type: Object, default: undefined},
     allowExport: {type: Boolean, default: false},
-    'mediaConfig': {type: Object, default: () => {return {show: false}}},
+    allowScripts: {type: Boolean, default: false},
+    'mediaConfig': {type: Object, default: () => {return {show: false, useGoogleFont: true,}}},
 
     'html': {type: String, default: () => ('')}, 
     'css': {type: String, default: ''},
     'js': {type: String, default: ''},
+    'model': {type: Object, default: () => ({
+        html: '',
+        js: '',
+        css: '',
+        scripts: [],
+        stylesheets: [],
+    })},
 
     'scripts': {type: Array, default: () => []},
     'stylesheets': {type: Array, default: () => []},
@@ -138,14 +149,18 @@ export default {
     });
   },
   mounted: async function() {
-    this.getEditor().render();
+    this.getEditor(true).render();
     // this.getEditor().on('load', this.editorLoaded);
     this.getEditor().on("change", this.editorChanged);
   },
 
   methods: {
-    getEditor() {
-      if (window.grapeseditor) {
+    getEditor(renew=false) {
+      if (renew && window.grapeseditor && window.grapeseditor.destroy) {
+         window.grapeseditor.destroy();
+      }
+      
+      if (!renew && window.grapeseditor) {
         return window.grapeseditor;
       }
 
@@ -153,7 +168,7 @@ export default {
 
       editor.Commands.add('open-assets',  initGrapesAssets(this.mediaConfig));
 
-      window.editor = window.grapeseditor = editor;
+      window.grapeseditor = editor;
       return window.grapeseditor;
     },
 
@@ -161,9 +176,17 @@ export default {
       let styles = [
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
       ];
+      if (true || this.mediaConfig.useGoogleFont) {
+        styles.push('https://fonts.googleapis.com/css?family=Alegreya|Alegreya+SC|Alegreya+Sans|Alegreya+Sans+SC|Alfa+Slab+One|Amatic+SC|Andika|Anton|Archivo|Archivo+Narrow|Arima+Madurai|Arimo|Arsenal|Asap|Asap+Condensed|Athiti|Bahianita|Bai+Jamjuree|Baloo|Baloo+Bhai|Baloo+Bhaijaan|Baloo+Bhaina|Baloo+Chettan|Baloo+Da|Baloo+Paaji|Baloo+Tamma|Baloo+Tammudu|Baloo+Thambi|Bangers|Barlow|Barlow+Condensed|Barlow+Semi+Condensed|Barriecito|Be+Vietnam|Bevan|Big+Shoulders+Display|Big+Shoulders+Text|Bungee|Bungee+Hairline|Bungee+Inline|Bungee+Outline|Bungee+Shade|Cabin|Cabin+Condensed|Chakra+Petch|Charm|Charmonman|Chonburi|Coiny|Comfortaa|Cormorant|Cormorant+Garamond|Cormorant+Infant|Cormorant+SC|Cormorant+Unicase|Cormorant+Upright|Cousine|Crimson+Pro|Cuprum|Dancing+Script|Darker+Grotesque|David+Libre|Dosis|EB+Garamond|Encode+Sans|Encode+Sans+Condensed|Encode+Sans+Expanded|Encode+Sans+Semi+Condensed|Encode+Sans+Semi+Expanded|Exo|Exo+2|Fahkwang|Farsan|Faustina|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed|Francois+One|Grenze|Hepta+Slab|IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif|Inconsolata|Itim|Josefin+Sans|Judson|Jura|K2D|Kanit|KoHo|Kodchasan|Krub|Lalezar|Lemonada|Lexend+Deca|Lexend+Exa|Lexend+Giga|Lexend+Mega|Lexend+Peta|Lexend+Tera|Lexend+Zetta|Literata|Livvic|Lobster|Lora|M+PLUS+1p|M+PLUS+Rounded+1c|Maitree|Major+Mono+Display|Mali|Manuale|Markazi+Text|Maven+Pro|Merriweather|Metrophobic|Mitr|Montserrat|Montserrat+Alternates|Muli|Niramit|Noticia+Text|Noto+Sans|Noto+Sans+SC|Noto+Serif|Noto+Serif+SC|Noto+Serif+TC|Nunito|Nunito+Sans|Old+Standard+TT|Open+Sans|Open+Sans+Condensed:300|Oswald|Pacifico|Pangolin|Patrick+Hand|Patrick+Hand+SC|Pattaya|Paytone+One|Philosopher|Play|Playfair+Display|Playfair+Display+SC|Podkova|Prata|Pridi|Prompt|Quicksand|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rokkitt|Rosario|Saira|Saira+Condensed|Saira+Extra+Condensed|Saira+Semi+Condensed|Saira+Stencil+One|Sarabun|Sawarabi+Gothic|Sedgwick+Ave|Sedgwick+Ave+Display|Sigmar+One|Source+Code+Pro|Source+Sans+Pro|Space+Mono|Spectral|Spectral+SC|Sriracha|Srisakdi|Taviraj|Thasadith|Tinos|Trirong|VT323|Varela+Round|Vollkorn|Vollkorn+SC|Yanone+Kaffeesatz|Yeseva+One&display=swap');
+      }
+
+      const customStyles = customStyleManager(true || this.mediaConfig.useGoogleFont);
+      console.log('customStyles: ', customStyles);
 
       if (this.stylesheets) {
-        styles = styles.concat(this.stylesheets);
+        styles = (styles.concat(this.stylesheets)).filter((value, idx, self) => {
+          return self.indexOf(value) === idx;
+        });
       }
 
       let scripts = [
@@ -173,7 +196,9 @@ export default {
       ];
 
       if (this.scripts) {
-        scripts = scripts.concat(this.scripts);
+        scripts = (scripts.concat(this.scripts)).filter((value, idx, self) => {
+          return self.indexOf(value) === idx;
+        });
       }
 
       let canvasCss = `
@@ -186,7 +211,6 @@ export default {
         .gjs-dashed div[data-gjs-type="bs_tabs-tab-pane"].show {outline: 1px dashed red !important;opacity:1 !important;}
         div[data-gjs-type="map"] iframe.gjs-no-pointer {width: inherit !important;}
       `;
-      let style = this.css;
       let urlStore = this.urlStore;
       let urlLoad = this.urlLoad;
       let images = this.images;
@@ -196,7 +220,7 @@ export default {
       let tuiEditorConfig = {...defaultTuiEditor, ...this.tuiEditorConfig};
 
       let editor = grapesjs.init({
-        allowScripts: 1,
+        allowScripts: this.allowScripts,
         avoidInlineStyle: 1,
         height: height + 'px',
         container: "#custom_gjs",
@@ -207,7 +231,7 @@ export default {
         storeComponents: true,
         storeStyles: true,
         autorender: false,
-        style,
+        //style: this.css,
         canvasCss,
         canvas: {
           styles: styles,
@@ -238,6 +262,22 @@ export default {
               // }
               ],
             },
+            {
+              name: 'Others',
+              open: false,
+              properties: [ {
+                name: 'Z Index',
+                property: 'z-index',
+                type: 'integer'
+              },
+              // {
+              //   name: 'Gradient',
+              //   property: 'background-image',
+              //   type: 'gradient',
+              //   defaults: 'none'
+              // }
+              ],
+            },
           ]
           
         },
@@ -251,6 +291,7 @@ export default {
           'grapesjs-tabs',
           'grapesjs-blocks-bootstrap4',
           "grapesjs-lory-slider",
+          "grapesjs-flipclock",
           // 'grapesjs-style-gradient',
           // 'gjs-style-gradient',
           // 'grapejs-parser-postcss',
@@ -303,7 +344,7 @@ export default {
               flexGrid: 1,
               stylePrefix: 'basic-',
             },
-            customStyleManager,
+            customStyleManager: customStyles,
           }, 
           'grapesjs-tui-image-editor': tuiEditorConfig,
         },
@@ -405,11 +446,13 @@ export default {
 
     editorChanged() {
       // console.log('Editor on changed');
-      this.$emit("change", {
-        html: this.getEditor().getHtml(), 
-        css: this.getEditor().getCss(), 
-        js: this.getEditor().getJs()
-      });
+      this.model.html = this.getEditor().getHtml();
+      this.model.css = this.getEditor().getCss(), 
+      this.model.js = this.getEditor().getJs(), 
+      this.model.scripts = this.getEditor().getConfig().canvas.scripts;
+      this.model.stylesheets = this.getEditor().getConfig().canvas.styles;
+
+      this.$emit("change", this.model);
     },
 
     saveEdits() {
@@ -501,5 +544,9 @@ export default {
 
   .gjs-mdl-dialog {
     max-width: inherit !important;
+  }
+
+  .gjs-field-wrp--datetime-local {
+    max-width: 70%;
   }
 </style>

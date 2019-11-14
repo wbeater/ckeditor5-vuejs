@@ -21,6 +21,7 @@ import 'grapesjs-component-countdown';
 import 'grapesjs-flipclock';
 import 'grapesjs-lory-slider';
 import 'grapesjs-blocks-bootstrap4';
+import 'grapesjs-bs4modal';
 // import 'grapesjs-style-gradient';
 
 /**********BEGIN Image editor ************* */
@@ -292,6 +293,7 @@ export default {
           'grapesjs-blocks-bootstrap4',
           "grapesjs-lory-slider",
           "grapesjs-flipclock",
+          'grapesjs-bs4modal',
           // 'grapesjs-style-gradient',
           // 'gjs-style-gradient',
           // 'grapejs-parser-postcss',
@@ -324,6 +326,9 @@ export default {
             tabsBlock: {
               category: 'Extra'
             }
+          },
+          'grapesjs-bs4modal': {
+
           },
           // 'grapesjs-style-gradient': {
           //   colorPicker: 'default',
@@ -380,6 +385,26 @@ export default {
       editor.on("storage:store", function(e) {
         console.log("Storage Stored ", e);
       });
+
+       editor.on('component:selected', model => {
+            var $ = grapesjs.$;
+            
+            if ($) {
+              if (model && model.ccid) {
+                var selTitle = $('#gjs-clm-sel-help #gjs-clm-label');
+                var selHelp = $('#gjs-clm-sel-help #gjs-clm-sel');
+
+                if (selTitle && selHelp) {
+                  if (selHelp.text().indexOf('#' + model.ccid) == -1) {
+                    selTitle.text("Selector (ID: #" + model.ccid + "): ");
+                  }
+                  else {
+                    selTitle.text("Selector: ");
+                  }
+                }
+              }
+            }
+        });
 
       // Do stuff on load
       editor.on("load", function() {

@@ -8,3 +8,4 @@ exports.plugins.push(
       }
     }
   })
+); 

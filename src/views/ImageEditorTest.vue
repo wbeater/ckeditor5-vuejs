@@ -77,7 +77,8 @@ export default {
             
                 if (ref) {
                     console.log('tuiImageEditor: ', ref);
-                    ref.loadUrl('http://beta.futurejs.com/wp-content/plugins/affiliate-manager/cors.php?url=http:/beta.futurejs.com/wp-content/uploads/2019/10/110-153656940251222853823-1537240320282510680630.jpg');
+                    //ref.loadUrl('http://beta.futurejs.com/wp-content/plugins/affiliate-manager/cors.php?url=http:/beta.futurejs.com/wp-content/uploads/2019/10/110-153656940251222853823-1537240320282510680630.jpg');
+                    ref.loadUrl('http://beta.futurejs.com/wp-content/plugins/affiliate-manager/cors.php?url=http://beta.futurejs.com/wp-content/uploads/2019/12/bird.jpg');
                 }
             })()
         },

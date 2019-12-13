@@ -1,3 +1,14 @@
+  "optionalDependencies": {
+    "canvas": "*",
+    "fabric": "*",
+    "grapesjs-style-gradient": "*",
+    "grapesjs-tui-image-editor-custom": "*",
+    "jsdom": "*",
+    "xmldom": "*"
+  },
+
+
+
 ==Install==
 ```
 npm i --save ckeditor5-vuejs

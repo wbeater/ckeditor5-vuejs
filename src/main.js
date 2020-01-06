@@ -15,19 +15,19 @@ Vue.use(Router)
 
 import App from './App.vue'
 import GrapesEditor from '@/views/GrapesEditor';
-import CodeMirrorTest from '@/views/CodeMirrorTest';
+// import CodeMirrorTest from '@/views/CodeMirrorTest';
 // import InlineEditor from '@/views/InlineEditor';
-import ImageEditor from '@/views/ImageEditorTest';
+// import ImageEditor from '@/views/ImageEditorTest';
 
 new Vue({
   vuetify: new Vuetify(),
   router: new Router({
     routes: [
-      {
-        path: '/image',
-        name: 'image',
-        component: ImageEditor
-      },
+      // {
+      //   path: '/image',
+      //   name: 'image',
+      //   component: ImageEditor
+      // },
       {
         path: '/grapes',
         name: 'grapes',

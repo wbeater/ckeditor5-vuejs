@@ -12,8 +12,9 @@ import GrapesEditor from './components/GrapesEditor';
 import EventBus from './services/EventBus';
 import ImageEditor from './components/ImageEditor';
 import CodeMirror from './components/CodeMirror';
+import {GoogleFonts, GoogleCss} from './components/google-font-families';
 // import AutosavePlugin from '@ckeditor/ckeditor5-autosave/src/autosave';
 // import MediaEmbedPlugin from './ckeditor-embed';
 
 // Vue.component('ckeditor', CKEditor); 
-export { CodeMirror, GrapesEditor, ImageEditor, EventBus, CKEditor, DecoupledEditor, InlineEditor, BalloonEditor,/*MediaEmbedPlugin, AutosavePlugin,*/ UploaderPlugin, Command, Plugin, ButtonView, toWidget, toWidgetEditable, Widget };
+export { GoogleFonts, GoogleCss, CodeMirror, GrapesEditor, ImageEditor, EventBus, CKEditor, DecoupledEditor, InlineEditor, BalloonEditor,/*MediaEmbedPlugin, AutosavePlugin,*/ UploaderPlugin, Command, Plugin, ButtonView, toWidget, toWidgetEditable, Widget };

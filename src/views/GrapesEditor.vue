@@ -68,7 +68,9 @@ export default {
     };
   },
   mounted() {
-
+    EventBus.$on('open-injectors', (model, params) => {
+      this.config.show = true;
+    });
   },
 
   methods: {

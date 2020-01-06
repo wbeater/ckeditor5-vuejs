@@ -28,6 +28,7 @@
 
 <script>
     import Vue from 'vue';
+    import EventBus from '@/services/EventBus'
     
     export default {
         props: {
@@ -38,6 +39,17 @@
           close() {
             this.config.show = false;
             Vue.set(this.config, 'show', false);
+
+            EventBus.$emit('close-injectors', {
+              'html': `
+              <img src="https://img2.10bestmedia.com/Images/Photos/352450/GettyImages-913753556_54_990x660.jpg">
+              `,
+              'scripts': ['http://plugins.jquery.com/jquery-wp-content/themes/jquery/js/modernizr.custom.2.8.3.min.js'],
+              'stylesheets' : ['http://plugins.jquery.com/jquery-wp-content/themes/plugins.jquery.com/style.css'],
+              'js': 'console.log("Hello world");',
+              'css': '',
+            });
+
             this.$emit('onSelected', ['https://img2.10bestmedia.com/Images/Photos/352450/GettyImages-913753556_54_990x660.jpg']);
           }
         }

@@ -22,6 +22,7 @@ import 'grapesjs-flipclock';
 import 'grapesjs-lory-slider';
 import 'grapesjs-blocks-bootstrap4';
 import 'grapesjs-bs4';
+import 'grapesjs-wbeater';
 // import 'grapesjs-style-gradient';
 
 /**********BEGIN Image editor ************* */
@@ -47,7 +48,7 @@ import grapesjsTouch from 'grapesjs-touch';
 // import grapesjsParserPostcss from 'grapesjs-parser-postcss';
 import grapesjsTooltip from 'grapesjs-tooltip';
 import grapesjsTuiImageEditor from 'grapesjs-tui-image-editor-custom';
-import grapesjsStyleFilter from 'grapesjs-style-filter';
+import grapesjsStyleFilter from 'grapesjs-style-filter'; 
 
 grapesjs.plugins.add('grapesjs-tabs', grapesjsTabs);
 grapesjs.plugins.add('grapesjs-tui-image-editor', grapesjsTuiImageEditor);
@@ -69,11 +70,13 @@ grapesjs.plugins.add('grapesjs-style-filter', grapesjsStyleFilter);
 import "grapesjs/dist/css/grapes.min.css";
 import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css"
 import "grapesjs-preset-webpage";
+import "grapesjs-preset-newsletter";
+
 import customStyleManager from './style-manager';
 import './style-manager.css';
 
 import initGrapesAssets from '@/components/CustomOpenAssets';
-// import "grapesjs-preset-newsletter";
+
 
 // import * as icona from '@/assets/tui-editor/svg/icon-a.svg';
 // import * as iconb from '@/assets/tui-editor/svg/icon-b.svg';
@@ -119,30 +122,28 @@ const defaultTuiEditor = {
 //   'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'
 // ];
 
-// const DEFAULT_FONTS = [
-//   'https://fonts.googleapis.com/css?family=Alegreya|Alegreya+SC|Alegreya+Sans|Alegreya+Sans+SC|Alfa+Slab+One|Amatic+SC|Andika|Anton|Archivo|Archivo+Narrow|Arima+Madurai|Arimo|Arsenal|Asap|Asap+Condensed|Athiti|Bahianita|Bai+Jamjuree|Baloo|Baloo+Bhai|Baloo+Bhaijaan|Baloo+Bhaina|Baloo+Chettan|Baloo+Da|Baloo+Paaji|Baloo+Tamma|Baloo+Tammudu|Baloo+Thambi|Bangers|Barlow|Barlow+Condensed|Barlow+Semi+Condensed|Barriecito|Be+Vietnam|Bevan|Big+Shoulders+Display|Big+Shoulders+Text|Bungee|Bungee+Hairline|Bungee+Inline|Bungee+Outline|Bungee+Shade|Cabin|Cabin+Condensed|Chakra+Petch|Charm|Charmonman|Chonburi|Coiny|Comfortaa|Cormorant|Cormorant+Garamond|Cormorant+Infant|Cormorant+SC|Cormorant+Unicase|Cormorant+Upright|Cousine|Crimson+Pro|Cuprum|Dancing+Script|Darker+Grotesque|David+Libre|Dosis|EB+Garamond|Encode+Sans|Encode+Sans+Condensed|Encode+Sans+Expanded|Encode+Sans+Semi+Condensed|Encode+Sans+Semi+Expanded|Exo|Exo+2|Fahkwang|Farsan|Faustina|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed|Francois+One|Grenze|Hepta+Slab|IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif|Inconsolata|Itim|Josefin+Sans|Judson|Jura|K2D|Kanit|KoHo|Kodchasan|Krub|Lalezar|Lemonada|Lexend+Deca|Lexend+Exa|Lexend+Giga|Lexend+Mega|Lexend+Peta|Lexend+Tera|Lexend+Zetta|Literata|Livvic|Lobster|Lora|M+PLUS+1p|M+PLUS+Rounded+1c|Maitree|Major+Mono+Display|Mali|Manuale|Markazi+Text|Maven+Pro|Merriweather|Metrophobic|Mitr|Montserrat|Montserrat+Alternates|Muli|Niramit|Noticia+Text|Noto+Sans|Noto+Sans+SC|Noto+Serif|Noto+Serif+SC|Noto+Serif+TC|Nunito|Nunito+Sans|Old+Standard+TT|Open+Sans|Open+Sans+Condensed:300|Oswald|Pacifico|Pangolin|Patrick+Hand|Patrick+Hand+SC|Pattaya|Paytone+One|Philosopher|Play|Playfair+Display|Playfair+Display+SC|Podkova|Prata|Pridi|Prompt|Quicksand|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rokkitt|Rosario|Saira|Saira+Condensed|Saira+Extra+Condensed|Saira+Semi+Condensed|Saira+Stencil+One|Sarabun|Sawarabi+Gothic|Sedgwick+Ave|Sedgwick+Ave+Display|Sigmar+One|Source+Code+Pro|Source+Sans+Pro|Space+Mono|Spectral|Spectral+SC|Sriracha|Srisakdi|Taviraj|Thasadith|Tinos|Trirong|VT323|Varela+Round|Vollkorn|Vollkorn+SC|Yanone+Kaffeesatz|Yeseva+One&display=swap',
-// ];
+import {GoogleCss} from './google-font-families';
 
 const defaultLibs = {
-  bootstrap: {
-    js: ['https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',],
-    css: ['https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'],
-  },
-
   jquery: {
     js: ['https://code.jquery.com/jquery-3.4.1.min.js'],
     css: [],
   },
 
+  bootstrap: {
+    js: ['https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',],
+    css: ['https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'],
+  },
+
   fonts: {
     js: [],
-    css: ['https://fonts.googleapis.com/css?family=Alegreya|Alegreya+SC|Alegreya+Sans|Alegreya+Sans+SC|Alfa+Slab+One|Amatic+SC|Andika|Anton|Archivo|Archivo+Narrow|Arima+Madurai|Arimo|Arsenal|Asap|Asap+Condensed|Athiti|Bahianita|Bai+Jamjuree|Baloo|Baloo+Bhai|Baloo+Bhaijaan|Baloo+Bhaina|Baloo+Chettan|Baloo+Da|Baloo+Paaji|Baloo+Tamma|Baloo+Tammudu|Baloo+Thambi|Bangers|Barlow|Barlow+Condensed|Barlow+Semi+Condensed|Barriecito|Be+Vietnam|Bevan|Big+Shoulders+Display|Big+Shoulders+Text|Bungee|Bungee+Hairline|Bungee+Inline|Bungee+Outline|Bungee+Shade|Cabin|Cabin+Condensed|Chakra+Petch|Charm|Charmonman|Chonburi|Coiny|Comfortaa|Cormorant|Cormorant+Garamond|Cormorant+Infant|Cormorant+SC|Cormorant+Unicase|Cormorant+Upright|Cousine|Crimson+Pro|Cuprum|Dancing+Script|Darker+Grotesque|David+Libre|Dosis|EB+Garamond|Encode+Sans|Encode+Sans+Condensed|Encode+Sans+Expanded|Encode+Sans+Semi+Condensed|Encode+Sans+Semi+Expanded|Exo|Exo+2|Fahkwang|Farsan|Faustina|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed|Francois+One|Grenze|Hepta+Slab|IBM+Plex+Mono|IBM+Plex+Sans|IBM+Plex+Sans+Condensed|IBM+Plex+Serif|Inconsolata|Itim|Josefin+Sans|Judson|Jura|K2D|Kanit|KoHo|Kodchasan|Krub|Lalezar|Lemonada|Lexend+Deca|Lexend+Exa|Lexend+Giga|Lexend+Mega|Lexend+Peta|Lexend+Tera|Lexend+Zetta|Literata|Livvic|Lobster|Lora|M+PLUS+1p|M+PLUS+Rounded+1c|Maitree|Major+Mono+Display|Mali|Manuale|Markazi+Text|Maven+Pro|Merriweather|Metrophobic|Mitr|Montserrat|Montserrat+Alternates|Muli|Niramit|Noticia+Text|Noto+Sans|Noto+Sans+SC|Noto+Serif|Noto+Serif+SC|Noto+Serif+TC|Nunito|Nunito+Sans|Old+Standard+TT|Open+Sans|Open+Sans+Condensed:300|Oswald|Pacifico|Pangolin|Patrick+Hand|Patrick+Hand+SC|Pattaya|Paytone+One|Philosopher|Play|Playfair+Display|Playfair+Display+SC|Podkova|Prata|Pridi|Prompt|Quicksand|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rokkitt|Rosario|Saira|Saira+Condensed|Saira+Extra+Condensed|Saira+Semi+Condensed|Saira+Stencil+One|Sarabun|Sawarabi+Gothic|Sedgwick+Ave|Sedgwick+Ave+Display|Sigmar+One|Source+Code+Pro|Source+Sans+Pro|Space+Mono|Spectral|Spectral+SC|Sriracha|Srisakdi|Taviraj|Thasadith|Tinos|Trirong|VT323|Varela+Round|Vollkorn|Vollkorn+SC|Yanone+Kaffeesatz|Yeseva+One&display=swap',]
+    css: [GoogleCss,]
   }
 };
 
 const defaultConfig = {
-  bootstrap: true,
   jquery: true,
+  bootstrap: true,
   fonts: true, 
 }
 
@@ -155,7 +156,8 @@ export default {
 
   props: {
     //'openAssets': {type: Object, default: undefined},
-    allowExport: {type: Boolean, default: false},
+    mail: {type: Boolean, default: false},
+    allowExport: {type: Boolean, default: false}, // Show Export HTML button
     allowScripts: {type: Boolean, default: false},
     'mediaConfig': {type: Object, default: () => {return {show: false, fonts: true, jquery: true, bootstrap: true}}},
 
@@ -174,6 +176,7 @@ export default {
     'stylesheets': {type: Array, default: () => []},
     'images': {type: Array, default: () => []},
 
+    ///////////////////////NOT USED
     'urlStore': {type: String, default: undefined}, 
     'urlLoad' :  {type: String, default: undefined}, 
     'stepsBeforeSave': {type: Number, default: 10}, 
@@ -197,6 +200,7 @@ export default {
       // this.getEditor().on('load', this.editorLoaded);
       this.getEditor().on("change", this.editorChanged);
     },
+
     getEditor(renew=false) {
       if (renew && window.grapeseditor && window.grapeseditor.destroy) {
          window.grapeseditor.destroy();
@@ -230,9 +234,6 @@ export default {
         }
       }
 
-      // const customStyles = customStyleManager(!this.mediaConfig.disableFonts);
-      const customStyles = customStyleManager(config.fonts);
-
       if (this.stylesheets) {
         styles = (styles.concat(this.stylesheets)).filter((value, idx, self) => {
           return self.indexOf(value) === idx;
@@ -262,7 +263,8 @@ export default {
       let stepsBeforeSave = this.stepsBeforeSave;
       let height = window.innerHeight - 50;
       let allowExport = this.allowExport;
-      let tuiEditorConfig = {...defaultTuiEditor, ...this.tuiEditorConfig};
+
+      const pluginConfig = this.getPlugins(config);
 
       let editor = grapesjs.init({
         allowScripts: this.allowScripts,
@@ -326,77 +328,8 @@ export default {
           ]
           
         },
-        plugins: [
-          "gjs-preset-webpage",
-          'grapesjs-tui-image-editor',
-          'grapesjs-custom-code',
-          'grapesjs-touch',
-          'grapesjs-tooltip',
-          'grapesjs-style-filter',
-          'grapesjs-tabs',
-          'grapesjs-blocks-bootstrap4',
-          "grapesjs-lory-slider",
-          "grapesjs-flipclock",
-          'grapesjs-bs4',
-          // 'grapesjs-style-gradient',
-          // 'gjs-style-gradient',
-          // 'grapejs-parser-postcss',
-          // grapejsTabs,          
-          // grapesjsCustomCode,
-          // grapesjsTouch,
-          // grapesjsTooltip,
-          // grapesjsParserPostcss,
-        ],
-        pluginsOpts: {
-          'grapesjs-blocks-bootstrap4': {
-              blocks: {},
-              blockCategories: {
-                layout: true,
-                components: true,
-                typography: true,
-                basic: true, //die for slider
-                forms: true,
-              },
-              labels: { },
-              formPredefinedActions: null,
-              optionsStringSeparator: '::'
-          },
-          "grapesjs-lory-slider": {
-            sliderBlock: {
-              category: "Extra"
-            }
-          },
-          'grapesjs-tabs': {
-            tabsBlock: {
-              category: 'Extra'
-            }
-          },
-          'grapesjs-bs4': {
-
-          },
-          // 'grapesjs-style-gradient': {
-          //   colorPicker: 'default',
-          //   grapickOpts: {
-          //     min: 1,
-          //     max: 99 
-          //   }
-          // },
-          "gjs-preset-webpage": {
-            modalImportTitle: "Import Template",
-            modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
-            modalImportContent: function(editor) {
-              return editor.getHtml() + "<style>" + editor.getCss() + "</style>";
-            },
-            // filestackOpts: null, //{ key: 'AYmqZc2e8RLGLE7TGkX3Hz' },
-            aviaryOpts: false,
-            blocksBasicOpts: { 
-              flexGrid: 1,
-              stylePrefix: 'basic-',
-            },
-            customStyleManager: customStyles,
-          }, 
-          'grapesjs-tui-image-editor': tuiEditorConfig,
-        },
+        plugins: pluginConfig.plugins,
+        pluginsOpts: pluginConfig.options,
         storageManager: {
           id: 'gjseditor-',         // Prefix identifier that will be used inside storing and loading
           type: 'remote',           // Type of the storage : local | remote
@@ -423,7 +356,6 @@ export default {
 
       // Store and load events
       editor.on("storage:load", function(e) {
-        // console.log("Storage Loaded ", e);
         editor.render();
       });
       // editor.on("storage:store", function(e) {
@@ -460,6 +392,8 @@ export default {
           var openSm = pn.getButton('views', 'open-sm');
           openSm && openSm.set('active', 1);
 
+          editor.runCommand('sw-visibility');
+
           // Add Settings Sector
           if ($) {
             var traitsSector = $(
@@ -485,6 +419,8 @@ export default {
                 traitStyle.display = "none";
               }
             });
+
+            $('.gjs-pn-panel.gjs-pn-options .gjs-pn-btn.fa.fa-square-o').click();
           }
         });
 
@@ -516,8 +452,20 @@ export default {
     editorChanged() {
       // console.log('Editor on changed');
       this.model.html = this.getEditor().getHtml();
-      this.model.css = this.getEditor().getCss(), 
-      this.model.js = this.getEditor().getJs(), 
+      const cjs = this.getEditor().getConfig().canvas.js || {};
+      let js =this.getEditor().getJs();
+
+
+      for (var id in cjs) {
+        if (cjs[id] && cjs[id][1]) {
+          this.model.html += `<script id="s_${id}">${cjs[id]}<\/script>`;
+          js += ';' + cjs[id];
+        }
+      }
+
+      this.model.css = this.getEditor().getCss();
+      this.model.js = js;
+      
       this.model.scripts = this.getEditor().getConfig().canvas.scripts || [];
       this.model.stylesheets = this.getEditor().getConfig().canvas.styles || [];
 
@@ -565,6 +513,133 @@ export default {
 
       // Change this to div.childNodes to support multiple top-level nodes
       return div.firstChild; 
+    },
+
+    getPlugins(config) {
+      if (!this.mail) {
+        // const customStyles = customStyleManager(!this.mediaConfig.disableFonts);
+        const customStyles = customStyleManager(config.fonts);
+        const tuiEditorConfig = {...defaultTuiEditor, ...this.tuiEditorConfig};
+
+        return {
+          plugins: [
+            "gjs-preset-webpage",
+            'grapesjs-custom-code',
+            'grapesjs-touch',
+            'grapesjs-tooltip',
+            'grapesjs-style-filter',
+            'grapesjs-tabs',
+            'grapesjs-blocks-bootstrap4',
+            "grapesjs-lory-slider",
+            "grapesjs-flipclock",
+            'grapesjs-bs4',
+            'grapesjs-wbeater',
+            // 'grapesjs-tui-image-editor',
+
+            // 'grapesjs-style-gradient',
+            // 'gjs-style-gradient',
+            // 'grapejs-parser-postcss',
+            // grapejsTabs,          
+            // grapesjsCustomCode,
+            // grapesjsTouch,
+            // grapesjsTooltip,
+            // grapesjsParserPostcss,
+          ],
+
+          options: {
+            'grapesjs-blocks-bootstrap4': {
+                blocks: {},
+                blockCategories: {
+                  layout: true,
+                  components: true,
+                  typography: true,
+                  basic: true, //die for slider
+                  forms: true,
+                },
+                labels: { },
+                formPredefinedActions: null,
+                optionsStringSeparator: '::'
+            },
+            "grapesjs-lory-slider": {
+              sliderBlock: {
+                category: "Extra"
+              }
+            },
+            'grapesjs-tabs': {
+              tabsBlock: {
+                category: 'Extra'
+              }
+            },
+            'grapesjs-bs4': {
+
+            },
+            // 'grapesjs-style-gradient': {
+            //   colorPicker: 'default',
+            //   grapickOpts: {
+            //     min: 1,
+            //     max: 99 
+            //   }
+            // },
+            "gjs-preset-webpage": {
+              modalImportTitle: "Import Template",
+              modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
+              modalImportContent: function(editor) {
+                return editor.getHtml() + "<style>" + editor.getCss() + "</style>";
+              },
+              // filestackOpts: null, //{ key: 'AYmqZc2e8RLGLE7TGkX3Hz' },
+              aviaryOpts: false,
+              blocksBasicOpts: { 
+                flexGrid: 1,
+                stylePrefix: 'basic-',
+              },
+              customStyleManager: customStyles,
+            }, 
+            'grapesjs-tui-image-editor': tuiEditorConfig,
+          }
+        }
+      }
+      else {
+        return {
+          plugins: [
+            'gjs-preset-newsletter',
+            //'gjs-plugin-ckeditor'
+          ],
+          options: {
+            'gjs-preset-newsletter': {
+              modalLabelImport: 'Paste all your code here below and click import',
+              modalLabelExport: 'Copy the code and use it wherever you want',
+              codeViewerTheme: 'material',
+              //defaultTemplate: templateImport,
+              importPlaceholder: '<table class="table"><tr><td class="cell">Hello world!</td></tr></table>',
+              cellStyle: {
+                'font-size': '12px',
+                'font-weight': 300,
+                'vertical-align': 'top',
+                color: 'rgb(111, 119, 125)',
+                margin: 0,
+                padding: 0,
+              }
+            },
+            // 'gjs-plugin-ckeditor': {
+            //   position: 'center',
+            //   options: {
+            //     startupFocus: true,
+            //     extraAllowedContent: '*(*);*{*}', // Allows any class and any inline style
+            //     allowedContent: true, // Disable auto-formatting, class removing, etc.
+            //     enterMode: CKEDITOR.ENTER_BR,
+            //     extraPlugins: 'sharedspace,justify,colorbutton,panelbutton,font',
+            //     toolbar: [
+            //       { name: 'styles', items: ['Font', 'FontSize' ] },
+            //       ['Bold', 'Italic', 'Underline', 'Strike'],
+            //       {name: 'paragraph', items : [ 'NumberedList', 'BulletedList']},
+            //       {name: 'links', items: ['Link', 'Unlink']},
+            //       {name: 'colors', items: [ 'TextColor', 'BGColor' ]},
+            //     ],
+            //   }
+            // }
+          }
+        }
+      }
     },
   },
 }

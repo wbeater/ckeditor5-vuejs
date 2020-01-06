@@ -1,6 +1,6 @@
 {
   "name": "ckeditor5-vuejs",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Customized rebuilt CKEditor5 for vuejs",
   "author": "wbeater",
   "scripts": {
@@ -14,6 +14,7 @@
     "grapesjs": "^0.15.8",
     "grapesjs-custom-code": "^0.1.2",
     "grapesjs-preset-webpage": "^0.1.11",
+    "grapesjs-preset-newsletter": "^0.2.20",
     "grapesjs-style-filter": "^0.1.1",
     "grapesjs-tooltip": "^0.1.5",
     "grapesjs-touch": "^0.1.1",

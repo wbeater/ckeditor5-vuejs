@@ -39,7 +39,7 @@
     "@ckeditor/ckeditor5-font": "*",
     "@ckeditor/ckeditor5-heading": "*",
     "@ckeditor/ckeditor5-highlight": "*",
-    "@ckeditor/ckeditor5-image": "^14.0.0",
+    "@ckeditor/ckeditor5-image": "^27.0.0",
     "@ckeditor/ckeditor5-inspector": "*",
     "@ckeditor/ckeditor5-link": "*",
     "@ckeditor/ckeditor5-list": "*",
